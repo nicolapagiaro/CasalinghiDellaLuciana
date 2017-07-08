@@ -8,7 +8,7 @@ $categorie = array();
 $query = "SELECT id, nome, immagine FROM CATEGORIE";
 $response = mysqli_query($db, $query);
 while ($row = mysqli_fetch_assoc($response)) {
-    $categorie[] = Categoria::conIdNomeImmagine($row['id'],$row['nome'],$row['immagine']);
+    $categorie[] = Categoria::conIdNomeImmagine($row['id'], $row['nome'], $row['immagine']);
 }
 ?>
 <html>
@@ -34,13 +34,11 @@ while ($row = mysqli_fetch_assoc($response)) {
                     <ul class="right hide-on-med-and-down">
                         <li class="active"><a href="#!">Home</a></li>
                         <li><a href="prodotti.php">Prodotti</a></li>
-                        <li><a href="info.html">Informazioni</a></li>
                         <li><a href="#">La nostra storia</a></li>
                     </ul>
                     <ul class="side-nav" id="mobile-demo">
                         <li><a href="#!">Home</a></li>
                         <li><a href="prodotti.php">Prodotti</a></li>
-                        <li><a href="info.html">Informazioni</a></li>
                         <li><a href="#">La nostra storia</a></li>
                     </ul>
                 </div>
@@ -49,16 +47,13 @@ while ($row = mysqli_fetch_assoc($response)) {
         <div class="parallax-container hide-on-small-only">
             <div class="parallax"><img id="home1" class="responsive-img" src="images/home1.jpg"></div>
         </div>
-        <div class="section grey lighten-4">
+        <div class="section">
             <div class="row container">
-                <div class="col l12 s12">
-                    <h3 class="header center-align">Casalinghi Dalla Luciana</h3>
-                </div>
-                <div class="col l2 m2">
-                    <img id="home1" class="responsive-img hide-on-small-only" src="images/logo.jpg">
+                <!--<div class="col l12 s12">
+                    <h4 class="left-align">Casalinghi Dalla Luciana</h4>
                 </div>
                 <div class="col l10 m10 s12">
-                    <p class="grey-text text-darken-3 lighten-3"gksu netbeans>
+                    <p>
                         Forte di un’esperienza pluridecennale, Casalinghi dalla Luciana diventa il luogo adatto per trovare tutto ci&ograve; che serve per attrezzare al meglio una cucina efficiente e funzionale, al passo con le esigenze
                         dei moderni cuochi. L’ambiente, a conduzione familiare, &egrave; un luogo accogliente dove ognuno pu&ograve; affidarsi ai nostri premurosi e professionali consigli. Ai futuri sposi, che vogliono predisporre una lista nozze,
                         offriamo un servizio caratterizzato da una particolare attenzione alle esigenze di ogni singola coppia. Viene data completa disponibilità e assistenza nelle loro scelte, anche al di fuori dell’orario di apertura.
@@ -67,14 +62,63 @@ while ($row = mysqli_fetch_assoc($response)) {
                     </p>
                     <br>
                 </div>
+                <div class="col l2 m2">
+                    <img id="home1" class="responsive-img hide-on-small-only" src="images/cdl_home.jpg">
+                </div>-->
+                <!-- luogo accogliente -->
                 <div class="col l12 s12">
-                    <h3 class="center-align">Scegli fra i nostri prodotti</h3>
+                    <h4 class="left-align">I nostri punti di forza</h4>
+                    <div class="col l4 m4 s12">
+                        <div class="col s12 center-align">
+                            <img class="responsive-img circle" width="180px" src="images/house.jpg">
+                        </div> 
+                        <div class="col s12 center-align">
+                            <h5>Luogo accogliente</h5>
+                        </div>       
+                        <div class="col s12 center-align">
+                            <p>L’ambiente, a conduzione familiare, &egrave; un luogo accogliente dove ognuno pu&ograve; affidarsi ai nostri premurosi e professionali consigli.</p>
+                        </div>  
+                    </div>
+                    <!-- vasto assortimento -->
+                    <div class="col l4 m4 s12">
+                        <div class="col s12 center-align">
+                            <img class="responsive-img circle" width="180px" src="images/boy&girl.jpg">
+                        </div> 
+                        <div class="col s12 center-align">
+                            <h5>Vasto assortimento</h5>
+                        </div>       
+                        <div class="col s12 center-align">
+                            <p>
+                                Il vasto assortimento di giocattoli renderà felici bambini 
+                                e bambine di ogni età e anche gli acquirenti pi&ugrave; 
+                                indecisi troveranno un valido supporto e 
+                                aiuto per la scelta del regalo pi&ugrave; appropriato.
+                            </p>
+                        </div>  
+                    </div>
+                    <!-- lista nozze -->
+                    <div class="col l4 m4 s12">
+                        <div class="col s12 center-align">
+                            <img class="responsive-img circle" width="180px" src="images/wedding.jpg">
+                        </div> 
+                        <div class="col s12 center-align">
+                            <h5>Lista nozze</h5>
+                        </div>       
+                        <div class="col s12 center-align">
+                            <p>Ai futuri sposi, che vogliono predisporre una lista nozze,
+                               offriamo un servizio caratterizzato da una particolare attenzione alle esigenze di ogni singola coppia.
+                            </p>
+                        </div>  
+                    </div>
+                </div>
+                <div class="col l12 s12">
+                    <h4 class="left-align">Scegli fra i nostri prodotti</h4>
                     <?php
-                    foreach ($categorie as $c) { 
-                        echo "<a href=\"prodotti.php?cat=".$c->getId()."\">
+                    foreach ($categorie as $c) {
+                        echo "<a href=\"prodotti.php?cat=" . $c->getId() . "\">
 				<div class=\"col l2 m6 s6\">
-                                    <img class=\"responsive-img home-img\" id=\"img_giochi\" src=\"images/".$c->getImmagine()."\">
-                                    <h6 class=\"center-align\">".$c->getNome()."</h6>
+                                    <img class=\"responsive-img home-img\" id=\"img_giochi\" src=\"images/" . $c->getImmagine() . "\">
+                                    <h6 class=\"center-align\">" . $c->getNome() . "</h6>
 				</div>
                                </a>";
                     }
@@ -156,4 +200,3 @@ while ($row = mysqli_fetch_assoc($response)) {
 <?php
 // Close the connection
 mysqli_close($db);
-?>

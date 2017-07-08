@@ -29,6 +29,22 @@
             return $instance;
         }
         
+        /**
+         * 
+         * @param type $id
+         * @param type $nome
+         * @param type $immagine
+         * @return self oggetto della classe
+         */
+        public static function conIdNomeImmagineCategoria($id, $nome, $immagine, $categoria) {
+            $instance = new self();
+            $instance->setId($id);
+            $instance->setNome($nome);
+            $instance->setImmagine($immagine);
+            $instance->setCategoria($categoria);
+            return $instance;
+        }
+        
         function getId() {
             return $this->id;
         }

@@ -1,26 +1,8 @@
-body {
-    background-color: #fafafa;
-}
-
 .buttonScrollTop{
     position:fixed;
     bottom:8%;
     right:2%;
     display:none;
-}
-
-.blockQ {
-    padding-left: 1rem;
-    border-left: 5px solid #b71c1c;
-}
-
-.blockQ:hover {
-    color: #b71c1c;
-}
-
-.productList {
-    padding-left: 15px;
-    color: #424242 !important;
 }
 
 .grey-text-1 {
@@ -56,4 +38,18 @@ body {
     width:42px !important;
     border-radius: 50%;
     color: white !important;
+}
+
+.prodotti-container {
+    border-bottom: 2px solid #eeeeee;
+    border-right: 2px solid #eeeeee;
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+    margin-bottom: 16px !important;
+    box-shadow: 2px 2px 1px #eeeeee;
+}
+
+.title-prodotti{
+    font-size:26px;
+    font-weight:300
 }
