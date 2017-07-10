@@ -25,7 +25,7 @@ while ($row = mysqli_fetch_assoc($response)) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body link="black" vlink="black" alink="black">
-        <div class="navabar-fixed red darken-4">
+        <div class="navabar red darken-4">
             <nav class="red darken-4">
                 <div class="container nav-wrapper red darken-4">
                     <a href="#!" class="brand-logo hide-on-small-only">Casalinghi Dalla Luciana</a>
@@ -48,26 +48,11 @@ while ($row = mysqli_fetch_assoc($response)) {
             <div class="parallax"><img id="home1" class="responsive-img" src="images/home1.jpg"></div>
         </div>
         <div class="section">
-            <div class="row container">
-                <!--<div class="col l12 s12">
-                    <h4 class="left-align">Casalinghi Dalla Luciana</h4>
-                </div>
-                <div class="col l10 m10 s12">
-                    <p>
-                        Forte di un’esperienza pluridecennale, Casalinghi dalla Luciana diventa il luogo adatto per trovare tutto ci&ograve; che serve per attrezzare al meglio una cucina efficiente e funzionale, al passo con le esigenze
-                        dei moderni cuochi. L’ambiente, a conduzione familiare, &egrave; un luogo accogliente dove ognuno pu&ograve; affidarsi ai nostri premurosi e professionali consigli. Ai futuri sposi, che vogliono predisporre una lista nozze,
-                        offriamo un servizio caratterizzato da una particolare attenzione alle esigenze di ogni singola coppia. Viene data completa disponibilità e assistenza nelle loro scelte, anche al di fuori dell’orario di apertura.
-                        E’ possibile effettuare lo stoccaggio dei regali e la consegna a domicilio degli stessi. Stessa competenza e professionalità viene messa in gioco nel secondo settore di vendita del negozio: i giochi e giocattoli.
-                        Il vasto assortimento di giocattoli renderà felici bambini e bambine di ogni età e anche gli acquirenti pi&ugrave; indecisi troveranno un valido supporto e aiuto per la scelta del regalo pi&ugrave; appropriato.
-                    </p>
-                    <br>
-                </div>
-                <div class="col l2 m2">
-                    <img id="home1" class="responsive-img hide-on-small-only" src="images/cdl_home.jpg">
-                </div>-->
-                <!-- luogo accogliente -->
+            <div class="row container">                
+                <!-- Paragrafo #1 -->
                 <div class="col l12 s12">
-                    <h4 class="left-align">I nostri punti di forza</h4>
+                    <h4 class="left-align red-text text-darken-4">I nostri punti di forza</h4>
+                    <!-- luogo accogliente -->
                     <div class="col l4 m4 s12">
                         <div class="col s12 center-align">
                             <img class="responsive-img circle" width="180px" src="images/house.jpg">
@@ -75,7 +60,7 @@ while ($row = mysqli_fetch_assoc($response)) {
                         <div class="col s12 center-align">
                             <h5>Luogo accogliente</h5>
                         </div>       
-                        <div class="col s12 center-align">
+                        <div class="col s12 left-align">
                             <p>L’ambiente, a conduzione familiare, &egrave; un luogo accogliente dove ognuno pu&ograve; affidarsi ai nostri premurosi e professionali consigli.</p>
                         </div>  
                     </div>
@@ -87,7 +72,7 @@ while ($row = mysqli_fetch_assoc($response)) {
                         <div class="col s12 center-align">
                             <h5>Vasto assortimento</h5>
                         </div>       
-                        <div class="col s12 center-align">
+                        <div class="col s12 left-align">
                             <p>
                                 Il vasto assortimento di giocattoli renderà felici bambini 
                                 e bambine di ogni età e anche gli acquirenti pi&ugrave; 
@@ -104,31 +89,76 @@ while ($row = mysqli_fetch_assoc($response)) {
                         <div class="col s12 center-align">
                             <h5>Lista nozze</h5>
                         </div>       
-                        <div class="col s12 center-align">
+                        <div class="col s12 left-align">
                             <p>Ai futuri sposi, che vogliono predisporre una lista nozze,
-                               offriamo un servizio caratterizzato da una particolare attenzione alle esigenze di ogni singola coppia.
+                                offriamo un servizio caratterizzato da una particolare attenzione alle esigenze di ogni singola coppia.
                             </p>
                         </div>  
                     </div>
                 </div>
+                <!-- Paragrafo #2 -->
                 <div class="col l12 s12">
-                    <h4 class="left-align">Scegli fra i nostri prodotti</h4>
+                    <h4 class="left-align red-text text-darken-4">I nostri prodotti</h4>
                     <?php
                     foreach ($categorie as $c) {
-                        echo "<a href=\"prodotti.php?cat=" . $c->getId() . "\">
-				<div class=\"col l2 m6 s6\">
-                                    <img class=\"responsive-img home-img\" id=\"img_giochi\" src=\"images/" . $c->getImmagine() . "\">
-                                    <h6 class=\"center-align\">" . $c->getNome() . "</h6>
-				</div>
-                               </a>";
+                        echo '<div class="col l4 m6 s12">
+                                <div class="col s12 center-align">
+                                <img class="responsive-img circle" width="180px" src="images/' . $c->getImmagine() . '">
+                                </div> 
+                                <div class="col s12 center-align">
+                                    <p class="flow-text">' . $c->getNome() . '</p>
+                                </div> 
+                             </div>';
                     }
                     ?>
                     <a href="prodotti.php">
-                        <div class="col l2 m6 s6">
-                            <img class="home-img responsive-img" src="images/catalogo1.jpg">
-                            <h6 class="center-align">Vedi catalogo completo</h6>
+                        <div class="col l4 m6 s12 catalogo-container">
+                            <div class="col s12 center-align">
+                                <img class="responsive-img circle" width="180px" src="images/catalogo1.jpg">
+                            </div> 
+                            <div class="col s12 center-align">
+                                <p class="flow-text">Vedo il catalogo completo</p>
+                            </div>  
                         </div>
                     </a>
+                </div>
+                <!-- Paragrafo #3 -->
+                <div class="col l12 s12">
+                    <h4 class="left-align red-text text-darken-4">Informazioni</h4>
+                    <div class="row">
+                        <div class="col s12">
+                            <p class="title-prodotti">Dove trovarci</p>
+                        </div>
+                        <div class="col l8 m6 s12">
+                            <a target="blank" href="https://www.google.it/maps/place/Casalinghi+Dalla+Luciana/@45.424989,11.8903645,17z/data=!3m1!4b1!4m5!3m4!1s0x477eda62c976263b:0xb3095876f1e71eb2!8m2!3d45.424989!4d11.8925585">
+                                <img class="responsive-img hide-on-small-only" src="images/mappa3.png">
+                            </a>
+                        </div>
+                        <div class="col l4 m6 s12">
+                            <a target="blank" href="https://www.google.it/maps/place/Casalinghi+Dalla+Luciana/@45.424989,11.8903645,17z/data=!3m1!4b1!4m5!3m4!1s0x477eda62c976263b:0xb3095876f1e71eb2!8m2!3d45.424989!4d11.8925585">
+                                <p><i class="material-icons">directions</i> via Tiziano Vecellio, 38</p>
+                            </a>
+                            <p><i class="material-icons">place</i> Padova</p>
+                            <p><i class="material-icons">phone</i> 049 604890</p>
+                        </div>  
+                    </div>
+                    <p class="title-prodotti">Orari <span id="orario"></span></p>
+                    <div class="col l8 m12 s12">
+                        <p class="hide-on-large-only">Dal lunedi al sabato: 9:00 - 12:30, 15:30 - 19:30</p>
+                        <table class="highlight hide-on-med-and-down">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Mattina</th>
+                                    <th>Pomeriggio</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tabellaOrari">
+                                
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

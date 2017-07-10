@@ -2,7 +2,7 @@ $(document).ready(function () {
     // (prodotti.php) nascondo l'header e il container della ricerca
     $('#ricercaContainer').toggle('display');
     $('#headerRicerca').toggle('display');
-    
+
     $('.parallax').parallax();
 
     $('.modal').modal();
@@ -59,31 +59,6 @@ $(document).ready(function () {
         });
     });
 
-    // Calcolo se il negozio è ancora aperto
-    var orarioOre = new Date($.now()).getHours();
-    var orarioMin = new Date($.now()).getMinutes();
-    /**
-    if (orarioOre >= 9 && orarioOre <= 12) {
-        if (orarioOre == 12 && orarioMin < 30)
-            $('#orario').text("(ora aperto)");
-        else
-            $('#orario').text("(ora chiuso)");
-    } else
-        $('#orario').text("(ora chiuso)");
-
-    if (orarioOre >= 15 && orarioOre <= 19) {
-        $('#orario').text("(ora aperto)");
-        if (orarioOre == 15 && orarioMin > 30)
-            $('#orario').text("(ora aperto)");
-        else
-            $('#orario').text("(ora chiuso)");
-
-        if (orarioOre == 19 && orarioMin < 30)
-            $('#orario').text("(ora aperto)");
-        else
-            $('#orario').text("(ora chiuso)");
-    }*/
-
     // Primo avvio della pagina (DA CAMBIARE)
     loadProdotti(1, "Infanzia");
 
@@ -131,9 +106,9 @@ $(document).ready(function () {
                     }
 
                     /* muovo la pagina
-                    $('html, body').animate({
-                        scrollTop: $("#ricercaContainer").offset().top
-                    }, 'slow');*/
+                     $('html, body').animate({
+                     scrollTop: $("#ricercaContainer").offset().top
+                     }, 'slow');*/
                 },
                 error: function (msg) {
                     console.log("Error: " + msg);
@@ -150,6 +125,8 @@ $(document).ready(function () {
         $('#ricerca').val("");
         Materialize.updateTextFields();
     });
+
+    readTextFile("http://localhost/CasalinghiDallaLucianaProject/orari.txt");
 });
 
 /* funzione per la select delle categorie su mobile
@@ -208,4 +185,61 @@ function changeImage($id) {
     $('#' + $id).removeClass("unselected-image");
     var $image = $('#' + $id).attr('src');
     $('#imageBig').attr("src", $image);
+}
+
+/**
+ * Funzione per leggere un file locale
+ * @param {type} file percorso del file
+ * @returns {string} il testo del file
+ */
+function readTextFile(file) {
+    $.get(file, function (file) {
+        var checked = false;
+        var obj = JSON.parse(file.toString());
+        var orari = obj.estate;
+        var s = "";
+        for (var i = 0; i < orari.length; i++) {
+            s += "<tr>" +
+                    "<td>" + orari[i].giorno + "</td>" +
+                    "<td>" + orari[i].mattina + "</td>" +
+                    "<td>" + orari[i].pomeriggio + "</td>" +
+                    "</tr>";
+        }
+        // verifico se il negozio è aperto ora
+        var curDate = new Date();
+        for (var i = 0; i < orari.length; i++) {
+            if (orari[i].giorno === getDayName(curDate.getDay())) {
+                checked = true;
+            } else {
+                $('#orario').text("- chiuso ora");
+            }
+        }
+        $('#tabellaOrari').html(s);
+    });
+}
+
+/**
+ * Funzione per vedere il nome del giorno dato
+ * @param {type} i numero di giorno
+ * @returns {String} nome del giorno
+ */
+function getDayName(i) {
+    switch (i) {
+        case 0:
+            return "Domenica";
+        case 1:
+            return "Lunedì";
+        case 2:
+            return "Martedì";
+        case 3:
+            return "Mercoledì";
+        case 4:
+            return "Giovedì";
+        case 5:
+            return "Venerdì";
+        case 6:
+            return "Sabato";
+        default:
+            return "Errore";
+    }
 }
