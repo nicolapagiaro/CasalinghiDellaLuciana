@@ -42,20 +42,7 @@ while ($row = mysqli_fetch_assoc($respCat)) {
                     </ul>
                     <ul class="side-nav" id="mobile-demo">
                         <li><a href="index.php">Home</a></li>
-                        <li>
-                            <a class="red-text"href="#">Prodotti</a>
-                            <ul class="back">
-                                <?php
-                                foreach ($categorie as $c) {
-                                    if ($c->getId() == $categoria)
-                                        $class = "acive";
-                                    else
-                                        $class = "";
-                                    echo "<li class=\"truncate $class\"><a href=\"prodotti.php?cat=" . $c->getId() . "\">" . $c->getNome() . "</a></li>";
-                                }
-                                ?>
-                            </ul>
-                        </li>
+                        <li><a class="red-text"href="#">Prodotti</a></li>
                         <li><a href="#">La nostra storia</a></li>
                     </ul>
                 </div>
@@ -110,9 +97,7 @@ while ($row = mysqli_fetch_assoc($respCat)) {
                             <div class="section"></div>
                         </div>
                     </div>
-                    <div id="content">
-
-                    </div>
+                    <div id="content"></div>
                 </div>
             </div>
         </div>
@@ -131,44 +116,9 @@ while ($row = mysqli_fetch_assoc($respCat)) {
                     <div class="col l4 offset-l2 s12">
                         <h5 class="white-text">Altri contatti</h5>
                         <ul>
-                            <li><a class="grey-text text-lighten-3" href="#modal1">Inviaci una mail</a></li>
                             <li><a class="grey-text text-lighten-3" target="black" href="https://www.facebook.com/casalinghi.luciana/">Facebook : Casalinghi Dalla Luciana</a></li>
                         </ul>
-                    </div>
-                    <!-- Modal Structure -->
-                    <div id="modal1" class="modal">
-                        <div class="modal-content">
-                            <h5>Inviaci una mail (casalinghidallaluciana@gmail.com)</h5>
-                            <form class="col s12" id="mail_form" method="POST">
-                                <div class="row">
-                                    <div class="input-field col l6 s12">
-                                        <input id="nome" type="text" name="nome">
-                                        <label for="nome">Il tuo nome</label>
-                                    </div>
-                                    <div class="input-field col l6 s12">
-                                        <input id="email" type="email" name="email" class="validate">
-                                        <label for="email" data-error="Indirizzo mail non valido!">Il tuo indirizzo email</label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                        <textarea id="textarea1" name="text" class="materialize-textarea" maxlength="150" length="150"></textarea>
-                                        <label for="textarea1">Testo della mail</label>
-                                    </div>
-                                    <div class="input-field col s12">
-                                        <button type="submit" class="waves-effect btn red darken-4">Invia</button>
-                                    </div>
-                                    <div class="input-field col s12">
-                                        <p id="result_mail"></p>
-                                    </div>
-                                </div>
-                        </div>
-                        </form>
-                        <div class="modal-footer">
-                            <button class="modal-action modal-close waves-effect waves-red btn-flat">Chiudi</button>
-                        </div>
-                    </div>
-                    <!-- /Modal -->		
+                    </div>		
                 </div>
             </div>
             <div class="footer-copyright">

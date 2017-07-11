@@ -26,9 +26,11 @@
 .material-icons.inactive {
     color: rgba(0, 0, 0, 0.26); 
 }
+
 i{
     vertical-align: middle !important; 
 }
+
 .images-number {
     background-color:#b71c1c;
     height:42px !important;
@@ -49,6 +51,10 @@ i{
 .title-prodotti{
     font-size:26px;
     font-weight:300
+}
+
+.title-prodotti.no-padd{
+    margin-bottom: 0px;
 }
 
 .catalogo-container:hover img{

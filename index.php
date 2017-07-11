@@ -127,7 +127,7 @@ while ($row = mysqli_fetch_assoc($response)) {
                     <h4 class="left-align red-text text-darken-4">Informazioni</h4>
                     <div class="row">
                         <div class="col s12">
-                            <p class="title-prodotti">Dove trovarci</p>
+                            <p class="title-prodotti no-padd">Dove trovarci</p>
                         </div>
                         <div class="col l8 m6 s12">
                             <a target="blank" href="https://www.google.it/maps/place/Casalinghi+Dalla+Luciana/@45.424989,11.8903645,17z/data=!3m1!4b1!4m5!3m4!1s0x477eda62c976263b:0xb3095876f1e71eb2!8m2!3d45.424989!4d11.8925585">
@@ -139,12 +139,11 @@ while ($row = mysqli_fetch_assoc($response)) {
                                 <p><i class="material-icons">directions</i> via Tiziano Vecellio, 38</p>
                             </a>
                             <p><i class="material-icons">place</i> Padova</p>
-                            <p><i class="material-icons">phone</i> 049 604890</p>
                         </div>  
                     </div>
-                    <p class="title-prodotti">Orari <span id="orario"></span></p>
+                    <p class="title-prodotti no-padd">Orari</p>
                     <div class="col l8 m12 s12">
-                        <p class="hide-on-large-only">Dal lunedi al sabato: 9:00 - 12:30, 15:30 - 19:30</p>
+                        <div id="divOrari" class="hide-on-large-only"></div>
                         <table class="highlight hide-on-med-and-down">
                             <thead>
                                 <tr>
@@ -153,11 +152,46 @@ while ($row = mysqli_fetch_assoc($response)) {
                                     <th>Pomeriggio</th>
                                 </tr>
                             </thead>
-
-                            <tbody id="tabellaOrari">
-                                
-                            </tbody>
+                            <tbody id="tabellaOrari"></tbody>
                         </table>
+                    </div>
+                </div>
+                <!-- Paragrafo #4 -->
+                <div class="col l12 s12">
+                    <h4 class="left-align red-text text-darken-4">Contattaci</h4>
+                    <div class="row">
+                        <div class="col l8 m12 s12">
+                            <p class="title-prodotti truncate">Inviaci una mail (casalinghidallaluciana@gmail.com)</p>
+                            <form id="mail_form" method="POST">
+                                <div class="row">
+                                    <div class="input-field col l6 s12">
+                                        <input  id="nome" type="text" name="nome">
+                                        <label for="nome">Il tuo nome</label>
+                                    </div>
+                                    <div class="input-field col l6 s12">
+                                        <input  id="email" type="email" name="email" class="validate">
+                                        <label for="email" data-error="Indirizzo mail non valido!">Il tuo indirizzo email</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <textarea id="textarea1" name="text" class="materialize-textarea" maxlength="150" length="150"></textarea>
+                                        <label for="textarea1">Testo della mail</label>
+                                    </div>
+                                    <div class="input-field col l6 m8 s8">
+                                        <p id="result_mail_success" class="green-text text-darken-2" >Mail inviata.</p>
+                                        <p id="result_mail_failed" class="red-text text-darken-2">Errore! Mail non inviata.</p>
+                                    </div>
+                                    <div class="input-field col l6 m4 s4 right-align">
+                                        <button type="submit" class="waves-effect btn red darken-4">Invia</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col l4 m12 s12">
+                            <p class="title-prodotti">Chiamaci:</p>
+                            <p><i class="material-icons">phone</i> 049 604890</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -175,44 +209,9 @@ while ($row = mysqli_fetch_assoc($response)) {
                     <div class="col l4 offset-l2 s12">
                         <h5 class="white-text">Altri contatti</h5>
                         <ul>
-                            <li><a class="grey-text text-lighten-3" href="#modal1">Manda una mail</a></li>
                             <li><a class="grey-text text-lighten-3" target="blank" href="https://www.facebook.com/casalinghi.luciana/">Facebook: Casalinghi Dalla Luciana</a></li>
                         </ul>
-                    </div>
-                    <!-- Modal Structure -->
-                    <div id="modal1" class="modal">
-                        <div class="modal-content">
-                            <h4>Inviaci una mail (casalinghidallaluciana@gmail.com)</h4>
-                            <form class="col s12" id="mail_form" method="POST">
-                                <div class="row">
-                                    <div class="input-field col l6 s12">
-                                        <input id="nome" type="text" name="nome">
-                                        <label for="nome">Il tuo nome</label>
-                                    </div>
-                                    <div class="input-field col l6 s12">
-                                        <input id="email" type="email" name="email" class="validate">
-                                        <label for="email" data-error="Indirizzo mail non valido!">Il tuo indirizzo email</label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                        <textarea id="textarea1" name="text" class="materialize-textarea" maxlength="150" length="150"></textarea>
-                                        <label for="textarea1">Testo della mail</label>
-                                    </div>
-                                    <div class="input-field col s12">
-                                        <button type="submit" class="waves-effect btn red darken-4">Invia</button>
-                                    </div>
-                                    <div class="input-field col s12">
-                                        <p id="result_mail"></p>
-                                    </div>
-                                </div>
-                        </div>
-                        </form>
-                        <div class="modal-footer">
-                            <button class="modal-action modal-close waves-effect waves-red btn-flat">Chiudi</button>
-                        </div>
-                    </div>
-                    <!-- /Modal -->	
+                    </div>	
                 </div>
             </div>
             <div class="footer-copyright">

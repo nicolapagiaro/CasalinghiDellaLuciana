@@ -3,6 +3,10 @@ $(document).ready(function () {
     $('#ricercaContainer').toggle('display');
     $('#headerRicerca').toggle('display');
 
+    // (index.php) nascondo risultati dell'invio della mail
+    $("#result_mail_success").toggle('display');
+    $("#result_mail_failed").toggle('display');
+
     $('.parallax').parallax();
 
     $('.modal').modal();
@@ -44,18 +48,35 @@ $(document).ready(function () {
         e.preventDefault();
 
         // Get some values from elements on the page:
-        var $form = $(this), mail = $form.find("input[name='email']").val(),
-                msg = $form.find("textarea[name='text']").val(), nome = $form.find("input[name='nome']").val();
+        var $form = $(this), mail = $form.find("input[name='email']").val().trim(),
+                msg = $form.find("textarea[name='text']").val().trim(), nome = $form.find("input[name='nome']").val().trim();
+                
+        if(mail.length === 0 || msg.length ===0 || nome.length === 0)
+            Materialize.toast("Completare tutti i campi per l'invio della mail.", 4000)
 
         // Send the data using post
         var posting = $.post("send_mail.php", {email: mail, mailText: msg, nome: nome});
 
         // Get the result
         posting.done(function (data) {
-            if (data === "1") {
-                $("#result_mail").text("Mail inviata");
-            } else
-                $("#result_mail").text("Mail non inviata");
+            if (data === "1")
+                if (!$('#result_mail_success').is(":visible"))
+                    $("#result_mail_success").toggle('display');
+                else
+                if (!$('#result_mail_failed').is(":visible"))
+                    $("#result_mail_failed").toggle('display');
+            //
+            setTimeout(function () {
+                $form.find("input[name='email']").val("");
+                $form.find("textarea[name='text']").val("");
+                $form.find("input[name='nome']").val("");
+                Materialize.updateTextFields();
+                if ($('#result_mail_failed').is(":visible"))
+                    $("#result_mail_failed").toggle('display');
+                if ($('#result_mail_success').is(":visible"))
+                    $("#result_mail_success").toggle('display');
+            }, 5000);
+
         });
     });
 
@@ -86,8 +107,8 @@ $(document).ready(function () {
                     for (var i = 0; i < obj.length; i++) {
                         s += "<div class='col l4 m6 s12'>" +
                                 "<div class='col s12 prodotti-container'>" +
-                                "<div class='col l9 offset-l1'><img class='responsive-img' src='images/bruder1.jpg'/>" +
-                                "</div><div class='col l12 center align'>" +
+                                "<div class='col l9 offset-l1 m9 offset-m1 s9 offset-s1'><img class='responsive-img' src='images/bruder1.jpg'/>" +
+                                "</div><div class='col l12 m12 s12 center-align'>" +
                                 "<br><span class='title-prodotti'>" + obj[i].nome + "</span>" +
                                 "<p class='grey-text-1 center-align'>" + obj[i].categoria.nome + "</p>" +
                                 "<a href='viewItem.php?prod=" + obj[i].id + "'>Piu informazioni</a></div></div></div>";
@@ -126,7 +147,7 @@ $(document).ready(function () {
         Materialize.updateTextFields();
     });
 
-    readTextFile("http://localhost/CasalinghiDallaLucianaProject/orari.txt");
+    readTextFile("orari.txt");
 });
 
 /* funzione per la select delle categorie su mobile
@@ -152,8 +173,8 @@ function loadProdotti(id, nome) {
             for (var i = 0; i < obj.length; i++) {
                 s += "<div class='col l4 m6 s12'>" +
                         "<div class='col s12 prodotti-container'>" +
-                        "<div class='col l9 offset-l1'><img class='responsive-img' src='images/bruder1.jpg'/>" +
-                        "</div><div class='col l12 center align'>" +
+                        "<div class='col l9 offset-l1 m9 offset-m1 s9 offset-s1'><img class='responsive-img' src='images/bruder1.jpg'/>" +
+                        "</div><div class='col l12 m12 s12 center align'>" +
                         "<br><p><span class='title-prodotti'>" + obj[i].nome + "</span></p>" +
                         "<a href='viewItem.php?prod=" + obj[i].id + "'>Piu informazioni</a></div></div></div>";
             }
@@ -194,27 +215,23 @@ function changeImage($id) {
  */
 function readTextFile(file) {
     $.get(file, function (file) {
-        var checked = false;
         var obj = JSON.parse(file.toString());
         var orari = obj.estate;
         var s = "";
+        var v = "";
         for (var i = 0; i < orari.length; i++) {
             s += "<tr>" +
                     "<td>" + orari[i].giorno + "</td>" +
                     "<td>" + orari[i].mattina + "</td>" +
                     "<td>" + orari[i].pomeriggio + "</td>" +
                     "</tr>";
+            v += "<p>" + orari[i].giorno + ": " + orari[i].mattina +
+                    ", " + orari[i].pomeriggio + "</p>";
         }
-        // verifico se il negozio è aperto ora
-        var curDate = new Date();
-        for (var i = 0; i < orari.length; i++) {
-            if (orari[i].giorno === getDayName(curDate.getDay())) {
-                checked = true;
-            } else {
-                $('#orario').text("- chiuso ora");
-            }
-        }
+
+        // stampo le stringhe nella pagina
         $('#tabellaOrari').html(s);
+        $('#divOrari').html(v);
     });
 }
 
