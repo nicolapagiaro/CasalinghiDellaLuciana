@@ -50,8 +50,8 @@ $(document).ready(function () {
         // Get some values from elements on the page:
         var $form = $(this), mail = $form.find("input[name='email']").val().trim(),
                 msg = $form.find("textarea[name='text']").val().trim(), nome = $form.find("input[name='nome']").val().trim();
-                
-        if(mail.length === 0 || msg.length ===0 || nome.length === 0)
+
+        if (mail.length === 0 || msg.length === 0 || nome.length === 0)
             Materialize.toast("Completare tutti i campi per l'invio della mail.", 4000)
 
         // Send the data using post
@@ -229,10 +229,67 @@ function readTextFile(file) {
                     ", " + orari[i].pomeriggio + "</p>";
         }
 
+
+        // Translate your hours to UTC, example here is using Central Standard Time (-0500 UTC)
+        // Opening hour in UTC is 16, Closing hour is 0 the next day
+        var d = new Date(),
+                open = new Date(),
+                closed = new Date();
+        if (d.getDay() !== 0) {
+            var orario = orari[d.getDay() - 1];
+            if (d.getHours() < 13) { //mattina
+                var o = orario.mattina.replace(" ", "").split("-");
+                
+                // Statically set UTC date for open
+                open.setUTCHours(o[0].split(":")[0]);
+                open.setUTCMinutes(o[0].split(":")[1]);
+                open.setUTCSeconds(0);
+                open.setUTCMilliseconds(0);
+                
+                // Statically Set UTC date for closing
+                closed.setUTCHours(o[1].split(":")[0]); // UTC hours is 0
+                closed.setUTCMinutes(o[1].split(":")[1]);
+                closed.setUTCSeconds(0);
+                closed.setUTCMilliseconds(0);
+
+                // Test for store open?
+                if (d > open && d < closed) {
+                    console.log("aperto");
+                }
+                else {
+                    console.log("chiuso");
+                }
+            } else { //pomeriggio
+                var o = orario.pomeriggio.replace(" ", "").split("-");
+                
+                // Statically set UTC date for open
+                open.setHours(o[0].split(":")[0]);
+                open.setMinutes(o[0].split(":")[1]);
+                open.setSeconds(0);
+                open.setMilliseconds(0);
+                
+                // Statically Set UTC date for closing
+                closed.setHours(o[1].split(":")[0]);
+                closed.setMinutes(o[1].split(":")[1]);
+                closed.setSeconds(0);
+                closed.setMilliseconds(0);
+
+                // Test for store open?
+                if (d > open && d < closed) {
+                    console.log("aperto");
+                }
+                else {
+                    console.log("chiuso");
+                    console.log(msToTime(Math.abs(open-d)));
+                }
+            }
+        }
+
         // stampo le stringhe nella pagina
         $('#tabellaOrari').html(s);
         $('#divOrari').html(v);
-    });
+    }
+    );
 }
 
 /**
@@ -259,4 +316,22 @@ function getDayName(i) {
         default:
             return "Errore";
     }
+}
+
+/**
+ * 
+ * @param {type} duration
+ * @returns {String}
+ */
+function msToTime(duration) {
+    var milliseconds = parseInt((duration%1000)/100)
+        , seconds = parseInt((duration/1000)%60)
+        , minutes = parseInt((duration/(1000*60))%60)
+        , hours = parseInt((duration/(1000*60*60))%24);
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+    return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
 }

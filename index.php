@@ -44,7 +44,7 @@ while ($row = mysqli_fetch_assoc($response)) {
                 </div>
             </nav>
         </div>
-        <div class="parallax-container hide-on-small-only">
+        <div class="parallax-container hide-on-med-and-down">
             <div class="parallax"><img id="home1" class="responsive-img" src="images/home1.jpg"></div>
         </div>
         <div class="section">
@@ -131,7 +131,7 @@ while ($row = mysqli_fetch_assoc($response)) {
                         </div>
                         <div class="col l8 m6 s12">
                             <a target="blank" href="https://www.google.it/maps/place/Casalinghi+Dalla+Luciana/@45.424989,11.8903645,17z/data=!3m1!4b1!4m5!3m4!1s0x477eda62c976263b:0xb3095876f1e71eb2!8m2!3d45.424989!4d11.8925585">
-                                <img class="responsive-img hide-on-small-only" src="images/mappa3.png">
+                                <img class="responsive-img" src="images/mappa3.png">
                             </a>
                         </div>
                         <div class="col l4 m6 s12">
@@ -139,22 +139,26 @@ while ($row = mysqli_fetch_assoc($response)) {
                                 <p><i class="material-icons">directions</i> via Tiziano Vecellio, 38</p>
                             </a>
                             <p><i class="material-icons">place</i> Padova</p>
-                        </div>  
+                        </div> 
+                        <div class="col s12">
+                            <p class="title-prodotti no-padd">Orari </p>
+                            <p id="orarioA">Ora Aperto</p><span id="orarioC">Ora Chiuso</span><span id="orarioDiff">chiude fra 5 min</span>
+                        </div>
+                        <div class="col l8 m12 s12">
+                            <div id="divOrari" class="hide-on-large-only"></div>
+                            <table class="highlight hide-on-med-and-down">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Mattina</th>
+                                        <th>Pomeriggio</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabellaOrari"></tbody>
+                            </table>
+                        </div>
                     </div>
-                    <p class="title-prodotti no-padd">Orari</p>
-                    <div class="col l8 m12 s12">
-                        <div id="divOrari" class="hide-on-large-only"></div>
-                        <table class="highlight hide-on-med-and-down">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Mattina</th>
-                                    <th>Pomeriggio</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabellaOrari"></tbody>
-                        </table>
-                    </div>
+
                 </div>
                 <!-- Paragrafo #4 -->
                 <div class="col l12 s12">
@@ -190,13 +194,13 @@ while ($row = mysqli_fetch_assoc($response)) {
                         </div>
                         <div class="col l4 m12 s12">
                             <p class="title-prodotti">Chiamaci:</p>
-                            <p><i class="material-icons">phone</i> 049 604890</p>
+                            <p><a href="tel:+39049604890"><i class="material-icons">phone</i> 049 604890</a></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="parallax-container hide-on-small-only">
+        <div class="parallax-container hide-on-med-and-down">
             <div class="parallax"><img id="home2" class="responsive-img" src="images/home2.jpg"></div>
         </div>
         <footer class="page-footer red darken-4">
