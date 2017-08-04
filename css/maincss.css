@@ -1,3 +1,46 @@
+/* NAVBAR */
+nav .brand-logo {
+  color: #b71c1c;
+}
+
+nav ul a {
+    color: #444;
+}
+
+nav ul a:hover {
+    background-color: rgba(183, 28, 28,0.3);
+}
+
+nav ul li.active a{
+    background-color: #b71c1c;
+    color:white;
+}
+
+nav .button-collapse i {
+  height: 56px;
+  line-height: 56px;
+  color: #444;
+}
+/* FINE */
+
+/* TABS DELLA NAVBAR */
+.tabs.tabs-transparent .tab a.active {
+    color: #b71c1c;
+}
+
+.tabs.tabs-transparent .tab a {
+   color: #444; 
+}
+
+.tabs.tabs-transparent .tab a:hover {
+   color: #b71c1c;
+}
+
+.tabs.tabs-transparent .indicator {
+    background-color: #b71c1c;
+}
+/* FINE */
+
 .buttonScrollTop{
     position:fixed;
     bottom:8%;
@@ -13,14 +56,9 @@
     color: #424242 !important;
 }
 
-.selected-image {
-    padding-bottom: 5px;
-    border-bottom: 3px solid #b71c1c;
-    margin-bottom:7px;
-}
-
-.unselected-image {
-    padding-bottom: 15px;
+.image-prod {
+    border: 1px solid #b0bec5;
+    margin-bottom: 8px !important;
 }
 
 .material-icons.inactive {
@@ -40,12 +78,12 @@ i{
 }
 
 .prodotti-container {
-    border-bottom: 2px solid #eeeeee;
-    border-right: 2px solid #eeeeee;
+    border-bottom: 2px solid #ffcdd2 ;
+    border-right: 2px solid #ffcdd2 ;
     padding-top: 16px !important;
     padding-bottom: 16px !important;
     margin-bottom: 16px !important;
-    box-shadow: 2px 2px 1px #eeeeee;
+    box-shadow: 0px 2px 1px #eeeeee ;
 }
 
 .title-prodotti{
@@ -55,8 +93,18 @@ i{
 
 .title-prodotti.no-padd{
     margin-bottom: 0px;
+    margin-top: 8px;
 }
 
 .catalogo-container:hover img{
     filter: brightness(85%);
+}
+.grow {
+    transition:all 0.5s ease;
+}
+
+.grow-animation {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
 }

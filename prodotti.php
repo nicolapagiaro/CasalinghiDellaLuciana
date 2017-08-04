@@ -19,7 +19,7 @@ while ($row = mysqli_fetch_assoc($respCat)) {
     <head>
         <title>Catalogo - Casalinghi Dalla Luciana</title>
         <!-- Icona -->
-        <link rel="icon" href="favicon.ico"/>
+         <link rel="icon" href="cdl_home.ico"/>
         <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--Import materialize.css-->
@@ -29,11 +29,10 @@ while ($row = mysqli_fetch_assoc($respCat)) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
-        <div class="red darken-4 navabar">
-            <nav class="red darken-4 nav-extended">
-                <div class="container nav-wrapper red darken-4">
-                    <a href="index.php" class="brand-logo hide-on-small-only">Casalinghi Dalla Luciana</a>
-                    <a href="index.php" class="brand-logo center hide-on-med-and-up">Casalinghi</a>
+        <div class="red white">
+            <nav class="red white nav-extended">
+                <div class="container nav-wrapper white">
+                    <a href="index.php" class="brand-logo truncate">Casalinghi Dalla Luciana</a>
                     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                     <ul class="right hide-on-med-and-down">
                         <li><a href="index.php">Home</a></li>
@@ -51,7 +50,9 @@ while ($row = mysqli_fetch_assoc($respCat)) {
                         <?php
                         foreach ($categorie as $c) {
                             $class = "";
-                            if($categorie[0]->getId() == $c->getId()) {$class = "active";}
+                            if ($categorie[0]->getId() == $c->getId()) {
+                                $class = "active";
+                            }
                             echo "<li class='tab'><a class='$class' id='" . $c->getId() . "' href='#sk" . $c->getId() . "'>" . $c->getNome() . "</a></li>";
                         }
                         ?>
@@ -64,40 +65,67 @@ while ($row = mysqli_fetch_assoc($respCat)) {
             <div class="row">
                 <div class="col l12 m12 s12">
                     <div class="row">
-                        <div id="header" class="col l8 m12 s12 hide-on-small-only">
-                            <p id="percorsoText"><a href="index.php">Home</a> / Prodotti / </p>
+                        <div id="header" class="col l8 m6 s12">
+                            <p id="percorsoText" class="hide-on-small-only"><a href="index.php">Home</a> / Prodotti / </p>
                             <h3 id="catAttiva" style="margin-top: 3px !important;"></h3>
                             <p id="catAttivaDescr" class="grey-text-2"></p>
                         </div>
-                        <div id="headerRicerca" class="col l8 m12 s12">
+                        <div id="headerRicerca" class="col l8 m6 s12">
                             <div class="col s10">
                                 <h3 id="ricercaText" style="margin-top: 3px !important;"></h3>
                                 <p class="grey-text-2">La ricerca viene effettuata per i nomi delle marche presenti nel negozio</p>
-                                <a href="#!" id="ricercaClose"><p>Chiudi</p></a>
+                                <p><a href="#!" id="ricercaClose" style="text-decoration: underline;">Chiudi</a></p>
                             </div>
                         </div>
-                        <div class="col l4 m12 s12 left-align">
+                        <div class="col l4 m6 s12 left-align">
                             <form id="search_form">
-                                <div class="input-field col s12">
-                                    <i class="material-icons prefix">search</i>
+                                <div class="input-field col s8">
                                     <input id="ricerca" name="search" type="text">
                                     <label for="ricerca">Cerca fra le nostre marche</label>
+                                </div>
+                                <div class="input-field col s4">
+                                    <button type="submit" class="btn red darken-4">Cerca</button>
                                 </div>
                             </form>
                         </div>
                     </div>
+                    <!-- Per mostrare il risultato della ricerca -->
                     <div id="ricercaContainer" class="col s12">
                         <div class="col s12">
                             <div id="ricercaContent"></div>
                         </div>
                         <!-- divider -->
                         <div class="col s12">
-                            <div class="section"></div>
+                            <div class="section left-align">
+                                <i>fine della ricerca</i>
+                            </div>
                             <div class="divider"></div>
                             <div class="section"></div>
                         </div>
                     </div>
-                    <div id="content"></div>
+                    <!-- Per mostrare i prodotti -->
+                    <div id="content" class="col s12"></div>
+                    <br>
+                    <!-- Per mostrare le info sul prodotto -->
+                    <div id="infoProdotto" class="col s12">
+                        <!-- divider -->
+                        <div class="col s12">
+                            <div class="section"></div>
+                            <div class="divider"></div>
+                            <div class="section"></div>
+                        </div>
+                        <div class="col l8 m8 s11">
+                            <p class="title-prodotti no-padd" id='nameProd'></p>
+                        </div>
+                        <div class="col l4 m4 s1 right-align">
+                            <a href='#!' onclick="closeDetails()"><i class="material-icons">close</i></a>
+                        </div>
+                        <div class="col l6 m6 s12">
+                            <p id='descrProd'></p>
+                            <p><i class="material-icons">supervisor_account</i> <span id="etaProd"></span></p>
+                        </div>
+                        <div class="col s12" id="fotoContainer"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -106,23 +134,23 @@ while ($row = mysqli_fetch_assoc($respCat)) {
         <a class="btn-floating btn-large grey darker-2 buttonScrollTop tooltipped" data-position="left" data-delay="10" data-tooltip="Torna su">
             <i class="material-icons">arrow_upward</i>
         </a>
-        <footer class="page-footer red darken-4">
+        <footer class="page-footer grey lighten-3">
             <div class="container">
                 <div class="row">
                     <div class="col l6 s12">
-                        <h5 class="white-text">Casalinghi Dalla Luciana</h5>
-                        <p class="grey-text text-lighten-4">Da oltre quarant'anni soddisfiamo i desideri dei più grandi e dei più piccini</p>
+                        <h5>Casalinghi Dalla Luciana</h5>
+                        <p >Da oltre quarant'anni soddisfiamo i desideri dei più grandi e dei più piccini</p>
                     </div>
                     <div class="col l4 offset-l2 s12">
-                        <h5 class="white-text">Altri contatti</h5>
+                        <h5>Altri contatti</h5>
                         <ul>
-                            <li><a class="grey-text text-lighten-3" target="black" href="https://www.facebook.com/casalinghi.luciana/">Facebook : Casalinghi Dalla Luciana</a></li>
+                            <li><a target="black" href="https://www.facebook.com/casalinghi.luciana/">Facebook : Casalinghi Dalla Luciana</a></li>
                         </ul>
                     </div>		
                 </div>
             </div>
             <div class="footer-copyright">
-                <div class="container">
+                <div class="container grey-text-2">
                     © 2014 Copyright
                 </div>
             </div>
