@@ -26,13 +26,16 @@ while ($row = mysqli_fetch_assoc($respCat)) {
         <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="css/maincss.css"/>
         <!--Let browser know website is optimized for mobile-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0"/>
     </head>
     <body>
         <div class="red white">
             <nav class="red white nav-extended">
                 <div class="container nav-wrapper white">
-                    <a href="index.php" class="brand-logo truncate">Casalinghi Dalla Luciana</a>
+                    <img src="cdl_home.ico" class="ico-home circle hide-on-small-only">
+                    <a href="index.php" class="brand-logo hide-on-small-only">Casalinghi Dalla Luciana</a>
+                    <a href="index.php" class="brand-logo hide-on-med-and-up">Casalinghi</a>
+                    <img src="cdl_home.ico" class="ico-home circle right hide-on-med-and-up">
                     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                     <ul class="right hide-on-med-and-down">
                         <li><a href="index.php">Home</a></li>
@@ -67,7 +70,7 @@ while ($row = mysqli_fetch_assoc($respCat)) {
                     <div class="row">
                         <div id="header" class="col l8 m6 s12">
                             <p id="percorsoText" class="hide-on-small-only"><a href="index.php">Home</a> / Prodotti / </p>
-                            <h3 id="catAttiva" style="margin-top: 3px !important;"></h3>
+                            <h4 id="catAttiva" style="margin-top: 3px !important;"></h4>
                             <p id="catAttivaDescr" class="grey-text-2"></p>
                         </div>
                         <div id="headerRicerca" class="col l8 m6 s12">
@@ -144,7 +147,8 @@ while ($row = mysqli_fetch_assoc($respCat)) {
                     <div class="col l4 offset-l2 s12">
                         <h5>Altri contatti</h5>
                         <ul>
-                            <li><a target="black" href="https://www.facebook.com/casalinghi.luciana/">Facebook : Casalinghi Dalla Luciana</a></li>
+                            <li><a target="blank" href="https://www.facebook.com/casalinghi.luciana/">Facebook: @casalinghi.luciana</a></li>
+                            <li><a target="blank" href="index.php#mail_">Inviaci una mail (casalinghidallaluciana@gmail.com)</a></li>
                         </ul>
                     </div>		
                 </div>

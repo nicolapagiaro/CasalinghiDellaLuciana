@@ -78,8 +78,8 @@ i{
 }
 
 .prodotti-container {
-    border-bottom: 2px solid #ffcdd2 ;
-    border-right: 2px solid #ffcdd2 ;
+    border-bottom: 2px solid #eeeeee ;
+    border-right: 2px solid #eeeeee ;
     padding-top: 16px !important;
     padding-bottom: 16px !important;
     margin-bottom: 16px !important;
@@ -99,6 +99,8 @@ i{
 .catalogo-container:hover img{
     filter: brightness(85%);
 }
+
+/* Immagini del paragrafo IN PRIMO PIANO */
 .grow {
     transition:all 0.5s ease;
 }
@@ -107,4 +109,11 @@ i{
     -webkit-transform: scale(1.1);
     -ms-transform: scale(1.1);
     transform: scale(1.1);
+}
+
+/* ICONA DEL SITO NELLA NAVBAR */
+.ico-home {
+    margin-top: 6px;
+    height: 48px;
+    border: 1px solid #ffcdd2;
 }

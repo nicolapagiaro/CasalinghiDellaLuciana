@@ -181,10 +181,18 @@ function loadDetails(id) {
             }
 
             $('#nameProd').text(obj.nome);
-            $('#descrProd').text(obj.descrizione);
-            $('#etaProd').text(obj.eta);
-            $('#fotoContainer').html(s);
-
+            if(obj.descrizione === null)
+                $('#descrProd').text("Nessuna descrizione disponibile");
+            else
+                $('#descrProd').text(obj.descrizione);
+            if(obj.eta === null)
+                $('#etaProd').text("-");
+            else
+                $('#etaProd').text(obj.eta);
+            if(s.length === 0)
+                $('#fotoContainer').html("<img class='materialboxed responsive-img image-prod' src='images/no_image.png'>");
+            else
+                $('#fotoContainer').html(s);
             // mostro a schermo
             if (!$('#infoProdotto').is(':visible'))
                 $('#infoProdotto').toggle('display');

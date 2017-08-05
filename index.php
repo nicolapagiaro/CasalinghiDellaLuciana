@@ -22,14 +22,16 @@ while ($row = mysqli_fetch_assoc($response)) {
         <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="css/maincss.css"/>
         <!--Let browser know website is optimized for mobile-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0"/>
     </head>
     <body link="black" vlink="black" alink="black">
         <div class="navabar white">
             <nav class="white">
                 <div class="container nav-wrapper white">
-                    <a href="#!" class="brand-logo hide-on-small-only">Casalinghi Dalla Luciana</a>
-                    <a href="#!" class="brand-logo center hide-on-med-and-up">Casalinghi</a>
+                    <img src="cdl_home.ico" class="ico-home circle hide-on-small-only">
+                    <a href="index.php" class="brand-logo hide-on-small-only">Casalinghi Dalla Luciana</a>
+                    <a href="index.php" class="brand-logo hide-on-med-and-up">Casalinghi</a>
+                    <img src="cdl_home.ico" class="ico-home circle right hide-on-med-and-up">
                     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                     <ul class="right hide-on-med-and-down">
                         <li class="active"><a href="#!">Home</a></li>
@@ -69,7 +71,7 @@ while ($row = mysqli_fetch_assoc($response)) {
                             <img class="responsive-img circle" width="180px" src="images/placeholder.png">
                         </div> 
                         <div class="col s12 center-align">
-                            <h5>Negozio storico</h5>
+                            <h5>Esperienza</h5>
                         </div>       
                         <div class="col s12 left-align">
                             <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus neque risus. 
@@ -84,7 +86,7 @@ while ($row = mysqli_fetch_assoc($response)) {
                             <img class="responsive-img circle" width="180px" src="images/house.jpg">
                         </div> 
                         <div class="col s12 center-align">
-                            <h5>Accoglienza</h5>
+                            <h5>Attenzione al cliente</h5>
                         </div>       
                         <div class="col s12 left-align">
                             <p>L’ambiente, a conduzione familiare, &egrave; un luogo accogliente dove ognuno pu&ograve; affidarsi ai nostri premurosi e professionali consigli.</p>
@@ -175,7 +177,7 @@ while ($row = mysqli_fetch_assoc($response)) {
                     </div>
                 </div>
                 <!-- Paragrafo #4 -->
-                <div class="col l12 s12">
+                <div id="mail_" class="col l12 s12">
                     <h4 class="left-align red-text text-darken-4">Contatti</h4>
                     <div class="row">
                         <div class="col l8 m12 s12">
@@ -210,7 +212,7 @@ while ($row = mysqli_fetch_assoc($response)) {
                             <p class="title-prodotti">Chiamaci</p>
                             <p><a href="tel:+39049604890"><i class="material-icons">phone</i> 049 604890</a></p>
                             <p class="title-prodotti">Seguici su Facebook</p>
-                            <p><a target="blank" href="https://www.facebook.com/casalinghi.luciana/"><span><img style="vertical-align: middle !important;" src="images/facebook_ico.jpg" height="24px"></span>  Casalinghi Dalla Luciana</a></p>
+                            <p><a target="blank" href="https://www.facebook.com/casalinghi.luciana/"><span><img style="vertical-align: middle !important;" src="images/facebook_ico.jpg" height="24px"></span>  @casalinghi.luciana</a></p>
                         </div>
                     </div>
                 </div>
@@ -225,12 +227,6 @@ while ($row = mysqli_fetch_assoc($response)) {
                     <div class="col l6 s12">
                         <h5>Casalinghi Dalla Luciana</h5>
                         <p >Da oltre quarant'anni soddisfiamo i desideri dei più grandi e dei più piccini</p>
-                    </div>
-                    <div class="col l4 offset-l2 s12">
-                        <h5>Altri contatti</h5>
-                        <ul>
-                            <li><a target="blank" href="https://www.facebook.com/casalinghi.luciana/">Facebook: Casalinghi Dalla Luciana</a></li>
-                        </ul>
                     </div>	
                 </div>
             </div>
