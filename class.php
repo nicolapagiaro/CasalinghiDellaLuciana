@@ -10,8 +10,7 @@ class Marca {
     var $descrizione;
     var $immagine;
     var $categoria;
-    var $eta;
-    var $fotos;
+    
 
     /**
      * Costruttore non parametrico
@@ -20,6 +19,19 @@ class Marca {
         
     }
 
+    /**
+     * 
+     * @param type $id
+     * @param type $nome
+     * @return self oggetto della classe
+     */
+    public static function conIdNome($id, $nome) {
+        $instance = new self();
+        $instance->setId($id);
+        $instance->setNome($nome);
+        return $instance;
+    }
+    
     /**
      * 
      * @param type $id
@@ -42,12 +54,13 @@ class Marca {
      * @param type $descrizione
      * @return self oggetto della classe
      */
-    public static function conIdNomeDescrizioneEta($id, $nome, $descrizione, $eta) {
+    public static function conIdNomeDescrizioneEtaImmagine($id, $nome, $descrizione, $eta, $immagine) {
         $instance = new self();
         $instance->setId($id);
         $instance->setNome($nome);
         $instance->setDescrizione($descrizione);
         $instance->setEta($eta);
+        $instance->setImmagine($immagine);
         return $instance;
     }
     
@@ -107,20 +120,15 @@ class Marca {
         $this->categoria = $categoria;
     }
 
-    function getFotso() {
-        return $this->fotos;
-    }
-
-    function setFotos($fotos) {
-        $this->fotos = $fotos;
-    }
-
-    function getEta() {
-        return $this->eta;
-    }
-
-    function setEta($eta) {
-        $this->eta = $eta;
+    
+    /**
+     * toString
+     * @return type
+     */
+    public function __toString(){
+        $v = $this->id."-".$this->descrizione."-".$this->immagine."-"
+                .$this->categoria."-".$this->nome;
+        return $v;
     }
 }
 
@@ -133,6 +141,9 @@ class Categoria {
     var $nome;
     var $descrizione;
     var $immagine;
+    var $marche;
+    var $fotos;
+    var $eta;
 
     /**
      * Costruttore non parametrico
@@ -201,12 +212,47 @@ class Categoria {
         $this->nome = $nome;
     }
 
+    function getMarche() {
+        return $this->marche;
+    }
+
+    function setMarche($marche) {
+        $this->marche = $marche;
+    }
+    
+
+    function getFotso() {
+        return $this->fotos;
+    }
+
+    function setFotos($fotos) {
+        $this->fotos = $fotos;
+    }
+    
+    
+    function getEta() {
+        return $this->eta;
+    }
+
+    function setEta($eta) {
+        $this->eta = $eta;
+    }
+    
+    /**
+     * toString
+     * @return type
+     */
+    public function __toString(){
+        $v = $this->id."-".$this->descrizione."-".$this->immagine."-".print_r($this->marche)."-".$this->nome."-"
+                .$this->fotos;
+        return $v;
+    }
 }
 
 class Foto {
     var $id;
     var $immagine;
-    var $marca;
+    var $categoria;
 
     /**
      * Costruttore vuoto
@@ -236,10 +282,6 @@ class Foto {
         return $this->immagine;
     }
 
-    function getMarca() {
-        return $this->marca;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -247,9 +289,112 @@ class Foto {
     function setImmagine($immagine) {
         $this->immagine = $immagine;
     }
-
-    function setMarca($marca) {
-        $this->marca = $marca;
+    
+    function getCategoria() {
+        return $this->categoria;
     }
 
+    function setCategoria($categoria) {
+        $this->categoria = $categoria;
+    }
+
+        
+    /**
+     * toString
+     * @return type
+     */
+    public function __toString(){
+        $v = $this->id."-".$this->immagine."-".$this->categoria;
+        return $v;
+    }
+}
+
+/**
+ * Classe per gestire le news che appariranno nella home del sito
+ */
+class News {
+   var $id;
+   var $titolo;
+   var $descrizione; 
+   var $coloreTesto;
+   var $immagine; 
+   var $dataI;
+   var $dataF; 
+   
+   /**
+    * Costruttore con tutto
+    * @param type $id
+    * @param type $titolo
+    * @param type $descrizione
+    * @param type $coloreTesto
+    * @param type $immagine
+    * @param type $dataI
+    * @param type $dataF
+    */
+   function __construct($id, $titolo, $descrizione, $coloreTesto, $immagine, $dataI, $dataF) {
+       $this->id = $id;
+       $this->titolo = $titolo;
+       $this->descrizione = $descrizione;
+       $this->coloreTesto = $coloreTesto;
+       $this->immagine = $immagine;
+       $this->dataI = $dataI;
+       $this->dataF = $dataF;
+   }
+
+      
+   function getId() {
+       return $this->id;
+   }
+
+   function getTitolo() {
+       return $this->titolo;
+   }
+
+   function getDescrizione() {
+       return $this->descrizione;
+   }
+
+   function getColoreTesto() {
+       return $this->coloreTesto;
+   }
+
+   function getImmagine() {
+       return $this->immagine;
+   }
+
+   function getDataI() {
+       return $this->dataI;
+   }
+
+   function getDataF() {
+       return $this->dataF;
+   }
+
+   function setId($id) {
+       $this->id = $id;
+   }
+
+   function setTitolo($titolo) {
+       $this->titolo = $titolo;
+   }
+
+   function setDescrizione($descrizione) {
+       $this->descrizione = $descrizione;
+   }
+
+   function setColoreTesto($coloreTesto) {
+       $this->coloreTesto = $coloreTesto;
+   }
+
+   function setImmagine($immagine) {
+       $this->immagine = $immagine;
+   }
+
+   function setDataI($dataI) {
+       $this->dataI = $dataI;
+   }
+
+   function setDataF($dataF) {
+       $this->dataF = $dataF;
+   }
 }

@@ -1,0 +1,17 @@
+.scritte{
+    font-size:22px;
+    font-weight:300;
+}
+
+.scritte.news {
+    margin-bottom: -8px !important;
+}
+
+.link {
+    text-decoration: underline;
+}
+
+label {
+    font-size: 0.8rem;
+    color: #000;
+}

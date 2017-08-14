@@ -25,6 +25,7 @@ while ($row = mysqli_fetch_assoc($respCat)) {
         <!--Import materialize.css-->
         <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="css/maincss.css"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0"/>
     </head>
@@ -70,12 +71,12 @@ while ($row = mysqli_fetch_assoc($respCat)) {
                     <div class="row">
                         <div id="header" class="col l8 m6 s12">
                             <p id="percorsoText" class="hide-on-small-only"><a href="index.php">Home</a> / Prodotti / </p>
-                            <h4 id="catAttiva" style="margin-top: 3px !important;"></h4>
+                            <p class="title-prodotti no-padd" id="catAttiva" style="margin-top: 3px !important;"></p>
                             <p id="catAttivaDescr" class="grey-text-2"></p>
                         </div>
                         <div id="headerRicerca" class="col l8 m6 s12">
                             <div class="col s10">
-                                <h3 id="ricercaText" style="margin-top: 3px !important;"></h3>
+                                <p class="title-prodotti no-padd" id="ricercaText" style="margin-top: 3px !important;"></p>
                                 <p class="grey-text-2">La ricerca viene effettuata per i nomi delle marche presenti nel negozio</p>
                                 <p><a href="#!" id="ricercaClose" style="text-decoration: underline;">Chiudi</a></p>
                             </div>
@@ -106,29 +107,14 @@ while ($row = mysqli_fetch_assoc($respCat)) {
                             <div class="section"></div>
                         </div>
                     </div>
+                    <!-- Per mostrare le foto -->
+                    <p class="title-prodotti no-padd-top">Una carrellata di immagini</p>
+                    <div class="hide-on-small-only" id="imageContent"></div>
+                    <div class="hide-on-med-and-up" id="imageContentCell"></div>
+                    <p class="title-prodotti">Le nostre marche</p>
+                    
                     <!-- Per mostrare i prodotti -->
                     <div id="content" class="col s12"></div>
-                    <br>
-                    <!-- Per mostrare le info sul prodotto -->
-                    <div id="infoProdotto" class="col s12">
-                        <!-- divider -->
-                        <div class="col s12">
-                            <div class="section"></div>
-                            <div class="divider"></div>
-                            <div class="section"></div>
-                        </div>
-                        <div class="col l8 m8 s11">
-                            <p class="title-prodotti no-padd" id='nameProd'></p>
-                        </div>
-                        <div class="col l4 m4 s1 right-align">
-                            <a href='#!' onclick="closeDetails()"><i class="material-icons">close</i></a>
-                        </div>
-                        <div class="col l6 m6 s12">
-                            <p id='descrProd'></p>
-                            <p><i class="material-icons">supervisor_account</i> <span id="etaProd"></span></p>
-                        </div>
-                        <div class="col s12" id="fotoContainer"></div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -160,9 +146,9 @@ while ($row = mysqli_fetch_assoc($respCat)) {
             </div>
         </footer>
         <!--Import jQuery before materialize.js-->
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script type="text/javascript" src="js/materialize.min.js"></script>
-        <script type="text/javascript" src="js/main_script.js"></script>
+        <script type="text/javascript" charset="UTF-8" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" charset="UTF-8" src="js/materialize.min.js"></script>
+        <script type="text/javascript" charset="UTF-8" src="js/main_script.js"></script>
     </body>
 </html>
 <?php

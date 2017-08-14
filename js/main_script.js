@@ -7,31 +7,17 @@ $(document).ready(function () {
     $("#result_mail_success").toggle('display');
     $("#result_mail_failed").toggle('display');
 
+    // (index.php) nascondo il form per loggare l'admin
+    $("#cp_form").toggle('display');
+
+    // effetto parallax delle immagini nella home
     $('.parallax').parallax();
 
-    $('.modal').modal();
+    // slide delle foto sia nella home che nei prodotti
+    $('.slider').slider({height: 400});
 
+    // per la textarea del testo della mail
     $('textarea').characterCounter();
-
-    // intervallo per cambiare le immagini nella home
-    var i = 1;
-    var images = ['https://scontent-mxp1-1.xx.fbcdn.net/v/t1.0-9/20375966_1434634296618283_8575950060171263086_n.jpg?oh=a21a7c28328f3555c1fb137b9722cfe2&oe=59F808D7',
-        'https://scontent-mxp1-1.xx.fbcdn.net/v/t1.0-9/19437508_1402673313147715_3952773638565462554_n.jpg?oh=975644b09312691d2397754a7ef659fb&oe=59F30739'];
-    setInterval(function () {
-        $('.grow').addClass('grow-animation');
-        setTimeout(function(){
-            if(i < images.length) {
-                $('.grow').attr('src', images[i]);
-                i++;
-            }
-            else if(i === images.length) {
-                i=0;
-                $('.grow').attr('src', images[i]);
-                i++;
-            }
-            $('.grow').removeClass('grow-animation');
-        }, 800);
-    }, 15000);
 
     $('.materialboxed').materialbox();
 
@@ -55,6 +41,22 @@ $(document).ready(function () {
     $('.buttonScrollTop').click(function () {
         $('html, body').animate({scrollTop: 0}, 500);
         return false;
+    });
+
+    // Rendere visibile il form per il login da admin
+    $("#cp_trigger").on('click', function () {
+        $("#cp_form").toggle('display');
+    });
+
+    // Login come admin
+    $('#cp_form').submit(function (e) {
+        var u = $('#user').val().trim(),
+                p = $('#pssw').val().trim();
+
+        if (u.length === 0 || p.length === 0) {
+            Materialize.toast("Completare tutti i campi.", 4000);
+            e.preventDefault();
+        }
     });
 
     // Invio della mail
@@ -100,8 +102,7 @@ $(document).ready(function () {
     // Funzione per il cambio delle tab dei prodotti
     $('.tab').on('click', function () {
         var id = $(this).children('a').attr('id');
-        var nome = $(this).children('a').text();
-        loadProdotti(id, nome);
+        loadProdotti(id);
     });
 
     // Funzione per la ricerca di prodotti
@@ -119,18 +120,19 @@ $(document).ready(function () {
                     var obj = JSON.parse(msg);
                     var s = "";
                     for (var i = 0; i < obj.length; i++) {
-                        s += "<div class='col l4 m6 s12'>" +
-                                "<div class='col s12 prodotti-container'>" +
-                                "<div class='col l9 offset-l1 m9 offset-m1 s9 offset-s1'><img class='responsive-img' src='images/bruder1.jpg'/>" +
-                                "</div><div class='col l12 m12 s12 center-align'>" +
-                                "<br><span class='title-prodotti'>" + obj[i].nome + "</span>" +
-                                "<p><i class='material-icons'>supervisor_account</i> 6-15 anni</p>" +
-                                "<p class='grey-text-1 center-align'><i class='material-icons'>keyboard_arrow_right</i> " + obj[i].categoria.nome + "</p>" +
-                                "<a onclick='loadDetails(" + obj[i].id + ")' style='text-decoration: underline;' href='#!'>Piu informazioni</a></div></div></div>";
+                        s += "<div class='col l3 m6 s12 valign-wrapper center-align' style='height: 100px;'>" +
+                             "<div class='center-align col l8 m8 s12'>";
+                        if (obj[i].immagine === null || obj[i].immagine.length === 0)
+                            s += "<img class='responsive-img' alt='image' src='images/no_image.png'/>";
+                        else
+                            s += "<img class='responsive-img' alt='image' src='images/" + obj[i].immagine + "'/>";
+
+                        s += "<p class='grey-text-1 center-align'><i class='material-icons'>keyboard_arrow_right</i> " + obj[i].categoria.nome + "</p>" +
+                                "</div></div>";
                     }
                     if (obj.length === 0) {
                         s += "<div class='col s12 center-aligned'>" +
-                                "<h5 class='grey-text-1 lighten-2 center-align'>La ricerca non ha prodotto nessun risultato</h5>" +
+                                "<p class='grey-text-1 lighten-2 center-align title-prodotti no-padd'>La ricerca non ha prodotto nessun risultato</p>" +
                                 "</div>";
                     }
                     $('#ricercaText').text("Ricerca di \"" + key + "\"");
@@ -161,68 +163,11 @@ $(document).ready(function () {
 });
 
 /**
- * Funzione per la visualizzazione delle informazioni
- * su un prodotto cliccato
- * @param {type} id id del prodotto
- * @returns {undefined}
- */
-function loadDetails(id) {
-    $.ajax({
-        type: "POST",
-        url: "getProdDetails.php",
-        data: "id=" + id,
-        success: function (msg) {
-            var obj = JSON.parse(msg);
-            var s = "";
-            for (var i = 0; i < obj.fotos.length; i++) {
-                s += "<div class='col l3 m4 s12'>" +
-                        "<img class='materialboxed responsive-img image-prod' src='images/" + obj.fotos[i].immagine + "'>" +
-                        "</div>";
-            }
-
-            $('#nameProd').text(obj.nome);
-            if(obj.descrizione === null)
-                $('#descrProd').text("Nessuna descrizione disponibile");
-            else
-                $('#descrProd').text(obj.descrizione);
-            if(obj.eta === null)
-                $('#etaProd').text("-");
-            else
-                $('#etaProd').text(obj.eta);
-            if(s.length === 0)
-                $('#fotoContainer').html("<img class='materialboxed responsive-img image-prod' src='images/no_image.png'>");
-            else
-                $('#fotoContainer').html(s);
-            // mostro a schermo
-            if (!$('#infoProdotto').is(':visible'))
-                $('#infoProdotto').toggle('display');
-            // muovo la pagina
-            $('html, body').animate({
-                scrollTop: $("#infoProdotto").offset().top
-            }, 'slow');
-            $('.materialboxed').materialbox();
-        },
-        error: function (msg) {
-            console.log("Error: " + msg);
-        }
-    });
-}
-
-/**
- * Funzione per chiudere il div dei dettagli
- * @returns {undefined}
- */
-function closeDetails() {
-    $('#infoProdotto').toggle('display');
-}
-
-/**
  * Funzione che carica i prodotti da far vedere
  * @param {type} id id della categoria selezionata
- * @param {type} nome nome della categoria selezionata
  * @returns {undefined}
  */
-function loadProdotti(id, nome) {
+function loadProdotti(id) {
     $("#content").fadeOut('slow');
     if ($('#infoProdotto').is(':visible'))
         $('#infoProdotto').toggle('display');
@@ -233,45 +178,57 @@ function loadProdotti(id, nome) {
         success: function (msg) {
             var obj1 = JSON.parse(msg);
             var obj = obj1.lista;
-            var s = "";
+            var cat = obj1.categoria;
+            var s = ""; // marche
+            var t = ""; // slide delle foto
+            var c = ""; // lista delle foto per la visualizzazione da cellulare
+
+            // marche
             for (var i = 0; i < obj.length; i++) {
-                s += "<div class='col l4 m6 s12'>" +
-                        "<div class='col s12 prodotti-container'>" +
-                        "<div class='col l9 offset-l1 m9 offset-m1 s9 offset-s1'><img class='responsive-img' src='images/bruder1.jpg'/>" +
-                        "</div><div class='col l12 m12 s12 center align'>" +
-                        "<br><p><span class='title-prodotti'>" + obj[i].nome + "</span></p>" +
-                        "<p><i class='material-icons'>supervisor_account</i> 6-15 anni</p>" +
-                        "<a onclick='loadDetails(" + obj[i].id + ")' style='text-decoration: underline;' href='#!'>Piu informazioni</a></div></div></div>";
+                s += "<div class='col l3 m6 s12 valign-wrapper center-align' style='height: 150px;'>" +
+                        "<div class='center-align col l8 m8 s12'>";
+                if (obj[i].immagine === null || obj[i].immagine.length === 0)
+                    s += "<img class='responsive-img' src='images/no_image.png'/>";
+                else
+                    s += "<img class='responsive-img' src='images/" + obj[i].immagine + "'/>";
+
+                s += "</div></div>";
             }
             if (obj.length === 0) {
                 s += "<div class='col s12 center-aligned'>" +
-                        "<h5 class='grey-text-1 lighten-2 center-align'>Nessun articolo presente</h5>" +
+                        "<p class='grey-text center-align'>Nessun articolo presente</p>" +
                         "</div>";
             }
 
-            $('#catAttiva').text(obj1.nomeCat);
-            $('#catAttivaDescr').text(obj1.descrCat);
+            // immagini 
+            if (cat.fotos.length === 0) {
+                t += "<div class='col s12 center-aligned'>" +
+                        "<p class='grey-text center-align'>Nessuna foto presente</p>" +
+                        "</div>";
+            } else {
+                t += "<div class='slider'><ul class='slides'>";
+                for (var i = 0; i < cat.fotos.length; i++) {
+                    t += "<li> " +
+                            "<img  src='images/" + cat.fotos[i].immagine + "' />" +
+                            "</li>";
+                    c += "<div class='col s12' style='margin-bottom: 8px;'><img class='responsive-img' src='images/" + cat.fotos[i].immagine + "' /></div>";
+                }
+                t += "</ul></div>";
+            }
+
+            // mostro tutto
+            $('#catAttiva').text(cat.nome);
+            $('#catAttivaDescr').text(cat.descrizione);
+            $('#imageContent').html(t);
+            $('#imageContentCell').html(c);
             $('#content').html(s);
             $("#content").fadeIn('slow');
+            $('.slider').slider({height : 550, transition : 650, interval: 10000});
         },
         error: function (msg) {
             console.log("Error: " + msg);
         }
     });
-}
-
-
-/**
- * Cambio dell'immagine nella visualizzazione del prodotto
- * @param {type} $id id dell'immagine
- */
-function changeImage($id) {
-    $('.selected-image').addClass("unselected-image");
-    $('.selected-image').removeClass("selected-image");
-    $('#' + $id).addClass("selected-image");
-    $('#' + $id).removeClass("unselected-image");
-    var $image = $('#' + $id).attr('src');
-    $('#imageBig').attr("src", $image);
 }
 
 /**

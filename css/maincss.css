@@ -77,15 +77,6 @@ i{
     color: white !important;
 }
 
-.prodotti-container {
-    border-bottom: 2px solid #eeeeee ;
-    border-right: 2px solid #eeeeee ;
-    padding-top: 16px !important;
-    padding-bottom: 16px !important;
-    margin-bottom: 16px !important;
-    box-shadow: 0px 2px 1px #eeeeee ;
-}
-
 .title-prodotti{
     font-size:26px;
     font-weight:300
@@ -96,19 +87,12 @@ i{
     margin-top: 8px;
 }
 
+.title-prodotti.no-padd-top{
+    margin-top: 0px;
+}
+
 .catalogo-container:hover img{
     filter: brightness(85%);
-}
-
-/* Immagini del paragrafo IN PRIMO PIANO */
-.grow {
-    transition:all 0.5s ease;
-}
-
-.grow-animation {
-    -webkit-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    transform: scale(1.1);
 }
 
 /* ICONA DEL SITO NELLA NAVBAR */
@@ -116,4 +100,14 @@ i{
     margin-top: 6px;
     height: 48px;
     border: 1px solid #ffcdd2;
+}
+
+/* INDICATORE ATTIVO DELLE IMMAGINI DELLA HOME */
+.slider .indicators .indicator-item.active {
+    background-color: #b71c1c;
+}
+
+.text-slide {
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }

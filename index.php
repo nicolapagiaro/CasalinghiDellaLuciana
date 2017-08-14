@@ -1,4 +1,7 @@
 <?php
+session_start();
+session_unset();
+
 include('constants.php');
 include('class.php');
 
@@ -9,6 +12,14 @@ $query = "SELECT id, nome, immagine FROM CATEGORIE";
 $response = mysqli_query($db, $query);
 while ($row = mysqli_fetch_assoc($response)) {
     $categorie[] = Categoria::conIdNomeImmagine($row['id'], $row['nome'], $row['immagine']);
+}
+$news = array();
+$query1 = "SELECT id, titolo, descrizione, coloreTesto, immagine"
+        . " FROM NEWS "
+        . "WHERE dataI < CURRENT_DATE AND dataF > CURRENT_DATE";
+$response1 = mysqli_query($db, $query1);
+while ($row = mysqli_fetch_assoc($response1)) {
+    $news[] = new News($row['id'], $row['titolo'], $row['descrizione'], $row['coloreTesto'],$row['immagine'], null, null);
 }
 ?>
 <html>
@@ -21,17 +32,18 @@ while ($row = mysqli_fetch_assoc($response)) {
         <!--Import materialize.css-->
         <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="css/maincss.css"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0"/>
     </head>
-    <body link="black" vlink="black" alink="black">
+    <body>
         <div class="navabar white">
             <nav class="white">
                 <div class="container nav-wrapper white">
-                    <img src="cdl_home.ico" class="ico-home circle hide-on-small-only">
+                    <a href="index.php"><img src="cdl_home.ico" class="ico-home circle hide-on-small-only"></a>
                     <a href="index.php" class="brand-logo hide-on-small-only">Casalinghi Dalla Luciana</a>
                     <a href="index.php" class="brand-logo hide-on-med-and-up">Casalinghi</a>
-                    <img src="cdl_home.ico" class="ico-home circle right hide-on-med-and-up">
+                    <a href="index.php"><img src="cdl_home.ico" class="ico-home circle right hide-on-med-and-up"></a>
                     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                     <ul class="right hide-on-med-and-down">
                         <li class="active"><a href="#!">Home</a></li>
@@ -54,12 +66,21 @@ while ($row = mysqli_fetch_assoc($response)) {
                 <!-- Paragrafo #0 -->
                 <div class="col l12 s12">
                     <h4 class="left-align red-text text-darken-4">In primo piano</h4>
-                    <!-- luogo accogliente -->
-                    <div class="col l6 center-align">  
-                        <img  class="grow responsive-img" src="https://scontent-mxp1-1.xx.fbcdn.net/v/t1.0-9/20375966_1434634296618283_8575950060171263086_n.jpg?oh=a21a7c28328f3555c1fb137b9722cfe2&oe=59F808D7"/>
-                    </div>
-                    <div class="col l6 center-align">  
-                        <img class="grow responsive-img" src="https://scontent-mxp1-1.xx.fbcdn.net/v/t1.0-9/20375966_1434634296618283_8575950060171263086_n.jpg?oh=a21a7c28328f3555c1fb137b9722cfe2&oe=59F808D7"/>
+                    <div class="slider">
+                        <ul class="slides">
+                            <?php 
+                            foreach ($news as $n) {
+                                $color = $n->getColoreTesto();
+                                echo "<li>
+                                    <img  src='images/" . $n->getImmagine() . "'>
+                                    <div class='caption right-align'>
+                                    <h3 class='$color'>" . $n->getTitolo() . "</h3>
+                                    <h5 class='$color'>" . $n->getDescrizione() . "</h5>
+                                    </div>
+                                    </li>";
+                            }
+                            ?>
+                        </ul>
                     </div>
                 </div>
                 <!-- Paragrafo #1 -->
@@ -115,26 +136,16 @@ while ($row = mysqli_fetch_assoc($response)) {
                     <h4 class="left-align red-text text-darken-4">I nostri prodotti</h4>
                     <?php
                     foreach ($categorie as $c) {
-                        echo '<div class="col l4 m6 s12">
+                        echo '<a href="prodotti.php"><div class="col l4 m6 s12 catalogo-container">
                                 <div class="col s12 center-align">
                                 <img class="responsive-img circle" width="180px" src="images/' . $c->getImmagine() . '">
                                 </div> 
                                 <div class="col s12 center-align">
                                     <p class="flow-text">' . $c->getNome() . '</p>
                                 </div> 
-                             </div>';
+                             </div></a>';
                     }
-                    ?>
-                    <a href="prodotti.php">
-                        <div class="col l4 m6 s12 catalogo-container">
-                            <div class="col s12 center-align">
-                                <img class="responsive-img circle" width="180px" src="images/catalogo1.jpg">
-                            </div> 
-                            <div class="col s12 center-align">
-                                <p class="flow-text">Vedo il catalogo completo</p>
-                            </div>  
-                        </div>
-                    </a>
+                    ?>                    
                 </div>
                 <!-- Paragrafo #3 -->
                 <div class="col l12 s12">
@@ -226,8 +237,27 @@ while ($row = mysqli_fetch_assoc($response)) {
                 <div class="row">
                     <div class="col l6 s12">
                         <h5>Casalinghi Dalla Luciana</h5>
-                        <p >Da oltre quarant'anni soddisfiamo i desideri dei più grandi e dei più piccini</p>
+                        <p>Da oltre quarant'anni soddisfiamo i desideri dei più grandi e dei più piccini</p>
+                        <p><a href="#!" id="cp_trigger">Panello di gestione</a></p>
                     </div>	
+                    <div class="col l6 s12">
+                        <form id="cp_form" action="cp/index.php" method="POST">
+                            <div class="input-field col s12">
+                                <h5>Login</h5>
+                            </div>
+                            <div class="input-field col l5 m5 s12">
+                                <input name="user" id="user" type="text">
+                                <label for="user">Username</label>
+                            </div>
+                            <div class="input-field col l5 m5 s12">
+                                <input name="pssw" id="pssw" type="password">
+                                <label for="pssw">Password</label>
+                            </div>
+                            <div class="input-field col l2 m2 s12 right-align">
+                                <button type="submit" class="btn-flat"><i class="material-icons">arrow_forward</i></button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="footer-copyright">
@@ -237,9 +267,9 @@ while ($row = mysqli_fetch_assoc($response)) {
             </div>
         </footer>
         <!--Import jQuery before materialize.js-->
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script type="text/javascript" src="js/materialize.min.js"></script>
-        <script type="text/javascript" src="js/main_script.js"></script>
+        <script type="text/javascript" charset="UTF-8" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" charset="UTF-8" src="js/materialize.min.js"></script>
+        <script type="text/javascript" charset="UTF-8"v src="js/main_script.js"></script>
     </body>
 </html>
 <?php
