@@ -19,7 +19,7 @@ $query1 = "SELECT id, titolo, descrizione, coloreTesto, immagine"
         . "WHERE dataI < CURRENT_DATE AND dataF > CURRENT_DATE";
 $response1 = mysqli_query($db, $query1);
 while ($row = mysqli_fetch_assoc($response1)) {
-    $news[] = new News($row['id'], $row['titolo'], $row['descrizione'], $row['coloreTesto'],$row['immagine'], null, null);
+    $news[] = new News($row['id'], $row['titolo'], $row['descrizione'], $row['coloreTesto'], $row['immagine'], null, null);
 }
 ?>
 <html>
@@ -64,11 +64,17 @@ while ($row = mysqli_fetch_assoc($response1)) {
         <div class="section">
             <div class="row container">   
                 <!-- Paragrafo #0 -->
-                <div class="col l12 s12">
+                <div class="col l12 s12" style="
+                    <?php 
+                    if (count($news) == 0) {
+                        echo 'display: none;';
+                    }
+                    ?>
+                ">
                     <h4 class="left-align red-text text-darken-4">In primo piano</h4>
                     <div class="slider">
                         <ul class="slides">
-                            <?php 
+                            <?php
                             foreach ($news as $n) {
                                 $color = $n->getColoreTesto();
                                 echo "<li>
@@ -267,9 +273,9 @@ while ($row = mysqli_fetch_assoc($response1)) {
             </div>
         </footer>
         <!--Import jQuery before materialize.js-->
-        <script type="text/javascript" charset="UTF-8" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script type="text/javascript" charset="UTF-8" src="js/materialize.min.js"></script>
-        <script type="text/javascript" charset="UTF-8"v src="js/main_script.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script type="text/javascript" src="js/main_script.js"></script>
     </body>
 </html>
 <?php

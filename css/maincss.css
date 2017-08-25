@@ -95,6 +95,10 @@ i{
     filter: brightness(85%);
 }
 
+.logo-container:hover{
+    filter: brightness(85%);
+}
+
 /* ICONA DEL SITO NELLA NAVBAR */
 .ico-home {
     margin-top: 6px;
@@ -107,7 +111,12 @@ i{
     background-color: #b71c1c;
 }
 
-.text-slide {
-    color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+/* AAAAAAAAA */
+.img {
+    padding: 10px !important;
+    height: 150px !important;
+    background-position: 50% 50%;
+    background-repeat:   no-repeat;
+    background-size:     contain;
+    background-origin: content-box;
 }

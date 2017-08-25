@@ -7,7 +7,6 @@ class Marca {
 
     var $id;
     var $nome;
-    var $descrizione;
     var $immagine;
     var $categoria;
     
@@ -87,11 +86,6 @@ class Marca {
     function getNome() {
         return $this->nome;
     }
-
-    function getDescrizione() {
-        return $this->descrizione;
-    }
-
     function getImmagine() {
         return $this->immagine;
     }
@@ -106,10 +100,6 @@ class Marca {
 
     function setNome($nome) {
         $this->nome = $nome;
-    }
-
-    function setDescrizione($descr) {
-        $this->descrizione = $descr;
     }
 
     function setImmagine($immagine) {

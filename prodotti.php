@@ -19,7 +19,7 @@ while ($row = mysqli_fetch_assoc($respCat)) {
     <head>
         <title>Catalogo - Casalinghi Dalla Luciana</title>
         <!-- Icona -->
-         <link rel="icon" href="cdl_home.ico"/>
+        <link rel="icon" href="cdl_home.ico"/>
         <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--Import materialize.css-->
@@ -33,10 +33,10 @@ while ($row = mysqli_fetch_assoc($respCat)) {
         <div class="red white">
             <nav class="red white nav-extended">
                 <div class="container nav-wrapper white">
-                    <img src="cdl_home.ico" class="ico-home circle hide-on-small-only">
+                    <a href="index.php"><img src="cdl_home.ico" class="ico-home circle hide-on-small-only"></a>
                     <a href="index.php" class="brand-logo hide-on-small-only">Casalinghi Dalla Luciana</a>
                     <a href="index.php" class="brand-logo hide-on-med-and-up">Casalinghi</a>
-                    <img src="cdl_home.ico" class="ico-home circle right hide-on-med-and-up">
+                    <a href="index.php"><img src="cdl_home.ico" class="ico-home circle right hide-on-med-and-up"></a>
                     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                     <ul class="right hide-on-med-and-down">
                         <li><a href="index.php">Home</a></li>
@@ -83,12 +83,12 @@ while ($row = mysqli_fetch_assoc($respCat)) {
                         </div>
                         <div class="col l4 m6 s12 left-align">
                             <form id="search_form">
-                                <div class="input-field col s8">
+                                <div class="input-field col s9">
                                     <input id="ricerca" name="search" type="text">
                                     <label for="ricerca">Cerca fra le nostre marche</label>
                                 </div>
-                                <div class="input-field col s4">
-                                    <button type="submit" class="btn red darken-4">Cerca</button>
+                                <div class="input-field col s3">
+                                    <button type="submit" class="btn red darken-4"><i class="material-icons">search</i></button>
                                 </div>
                             </form>
                         </div>
@@ -111,8 +111,8 @@ while ($row = mysqli_fetch_assoc($respCat)) {
                     <p class="title-prodotti no-padd-top">Una carrellata di immagini</p>
                     <div class="hide-on-small-only" id="imageContent"></div>
                     <div class="hide-on-med-and-up" id="imageContentCell"></div>
-                    <p class="title-prodotti">Le nostre marche</p>
-                    
+                    <p class="title-prodotti">Le nostre marche</p>                  
+
                     <!-- Per mostrare i prodotti -->
                     <div id="content" class="col s12"></div>
                 </div>
@@ -146,9 +146,9 @@ while ($row = mysqli_fetch_assoc($respCat)) {
             </div>
         </footer>
         <!--Import jQuery before materialize.js-->
-        <script type="text/javascript" charset="UTF-8" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script type="text/javascript" charset="UTF-8" src="js/materialize.min.js"></script>
-        <script type="text/javascript" charset="UTF-8" src="js/main_script.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script type="text/javascript" src="js/main_script.js"></script>
     </body>
 </html>
 <?php

@@ -13,8 +13,8 @@ $(document).ready(function () {
     // effetto parallax delle immagini nella home
     $('.parallax').parallax();
 
-    // slide delle foto sia nella home che nei prodotti
-    $('.slider').slider({height: 400});
+    // slide delle foto nella home
+    $('.slider').slider({height: 400, transition: 650, interval: 5000});
 
     // per la textarea del testo della mail
     $('textarea').characterCounter();
@@ -25,8 +25,7 @@ $(document).ready(function () {
         menuWidth: 250, // Default is 240
         edge: 'left', // Choose the horizontal origin
         closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-    }
-    );
+    });
 
     //Check to see if the window is top if not then display button
     $(window).scroll(function () {
@@ -96,9 +95,6 @@ $(document).ready(function () {
         });
     });
 
-    // Primo avvio della pagina (DA CAMBIARE)
-    loadProdotti(1, "Infanzia");
-
     // Funzione per il cambio delle tab dei prodotti
     $('.tab').on('click', function () {
         var id = $(this).children('a').attr('id');
@@ -120,15 +116,14 @@ $(document).ready(function () {
                     var obj = JSON.parse(msg);
                     var s = "";
                     for (var i = 0; i < obj.length; i++) {
-                        s += "<div class='col l3 m6 s12 valign-wrapper center-align' style='height: 100px;'>" +
-                             "<div class='center-align col l8 m8 s12'>";
+                        s += "<div class='col l3 m4 s6'>";
                         if (obj[i].immagine === null || obj[i].immagine.length === 0)
-                            s += "<img class='responsive-img' alt='image' src='images/no_image.png'/>";
+                            s += "<div class='img' style=\"background-image:url('images/no_image.png');\"></div>";
                         else
-                            s += "<img class='responsive-img' alt='image' src='images/" + obj[i].immagine + "'/>";
+                            s += "<div class='img' style=\"background-image:url('images/" + obj[i].immagine + "');\"></div>";
 
                         s += "<p class='grey-text-1 center-align'><i class='material-icons'>keyboard_arrow_right</i> " + obj[i].categoria.nome + "</p>" +
-                                "</div></div>";
+                                "</div>";
                     }
                     if (obj.length === 0) {
                         s += "<div class='col s12 center-aligned'>" +
@@ -160,6 +155,11 @@ $(document).ready(function () {
     });
 
     readTextFile("orari.txt");
+
+    if ($('#content').is(':visible')) {
+        // Primo avvio della pagina (DA CAMBIARE)
+        loadProdotti(1, "Infanzia");
+    }
 });
 
 /**
@@ -169,8 +169,6 @@ $(document).ready(function () {
  */
 function loadProdotti(id) {
     $("#content").fadeOut('slow');
-    if ($('#infoProdotto').is(':visible'))
-        $('#infoProdotto').toggle('display');
     $.ajax({
         type: "POST",
         url: "getProdotti.php",
@@ -185,14 +183,10 @@ function loadProdotti(id) {
 
             // marche
             for (var i = 0; i < obj.length; i++) {
-                s += "<div class='col l3 m6 s12 valign-wrapper center-align' style='height: 150px;'>" +
-                        "<div class='center-align col l8 m8 s12'>";
                 if (obj[i].immagine === null || obj[i].immagine.length === 0)
-                    s += "<img class='responsive-img' src='images/no_image.png'/>";
+                    s += "<div class='logo-container img col l3 m4 s6' style=\"background-image:url('images/no_image.png');\"></div>";
                 else
-                    s += "<img class='responsive-img' src='images/" + obj[i].immagine + "'/>";
-
-                s += "</div></div>";
+                    s += "<div class='logo-container img col l3 m4 s6' style=\"background-image:url('images/" + obj[i].immagine + "');\"></div>";
             }
             if (obj.length === 0) {
                 s += "<div class='col s12 center-aligned'>" +
@@ -223,7 +217,7 @@ function loadProdotti(id) {
             $('#imageContentCell').html(c);
             $('#content').html(s);
             $("#content").fadeIn('slow');
-            $('.slider').slider({height : 550, transition : 650, interval: 10000});
+            $('.slider').slider({height: 550, transition: 650, interval: 10000});
         },
         error: function (msg) {
             console.log("Error: " + msg);
@@ -239,7 +233,7 @@ function loadProdotti(id) {
 function readTextFile(file) {
     $.get(file, function (file) {
         var obj = JSON.parse(file.toString());
-        var orari = obj.estate;
+        var orari = obj[obj.orario];
         var s = "";
         var v = "";
         for (var i = 0; i < orari.length; i++) {
@@ -251,12 +245,20 @@ function readTextFile(file) {
             v += "<p>" + orari[i].giorno + ": " + orari[i].mattina +
                     ", " + orari[i].pomeriggio + "</p>";
         }
-        checkOrarioNegozio(orari);
-
-        var interval = 60000; // 1 minuto
-        setInterval(function () { // controllo sempre se è aperto o chiuso
+        if (!obj.ferie) {
             checkOrarioNegozio(orari);
-        }, interval);
+
+            var interval = 60000; // 1 minuto
+            setInterval(function () { // controllo sempre se è aperto o chiuso
+                checkOrarioNegozio(orari);
+            }, interval);
+        } else { //il negozio è chiuso per ferie
+            if (!$('#orarioC').is(':visible'))
+                $('#orarioC').toggle('display');
+            if ($('#orarioA').is(':visible'))
+                $('#orarioA').toggle('display');
+            $('#orarioDiff').text('Il negozio è in ferie');
+        }
 
         // stampo le stringhe nella pagina
         $('#tabellaOrari').html(s);
