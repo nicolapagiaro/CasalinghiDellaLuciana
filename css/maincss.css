@@ -111,7 +111,7 @@ i{
     background-color: #b71c1c;
 }
 
-/* AAAAAAAAA */
+/* Loghi dei prodotti */
 .img {
     padding: 10px !important;
     height: 150px !important;
@@ -119,4 +119,15 @@ i{
     background-repeat:   no-repeat;
     background-size:     contain;
     background-origin: content-box;
+}
+
+/* per le scritte dell'ordinamento dei prodotti nella versione mobile '*/
+.order-scritte {
+    text-decoration: underline !important;
+}
+
+/* per evidenziare la ricerca */
+mark {
+    background-color: lightskyblue;
+    color: black;
 }

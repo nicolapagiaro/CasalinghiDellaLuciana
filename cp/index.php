@@ -3,6 +3,7 @@ include('../constants.php');
 include('../class.php');
 session_start();
 session_unset();
+
 $user = "null";
 $db = mysqli_connect(HOST, USER, PASSW, DB) or die("Errore nella connessione");
 if (!isset($_SESSION['user'])) {
@@ -39,7 +40,7 @@ foreach ($categorie as $c) {
 $news = array();
 $query1 = "SELECT *"
         . " FROM NEWS "
-        . "WHERE dataI < CURRENT_DATE AND dataF > CURRENT_DATE";
+        . "WHERE dataI <= CURRENT_DATE AND dataF >= CURRENT_DATE";
 $response1 = mysqli_query($db, $query1);
 while ($row = mysqli_fetch_assoc($response1)) {
     $news[] = new News($row['id'], $row['titolo'], $row['descrizione'], $row['coloreTesto'], $row['immagine'], $row['dataI'], $row['dataF']);
@@ -65,7 +66,7 @@ while ($row = mysqli_fetch_assoc($response1)) {
                     <a class="brand-logo hide-on-small-only">Pannello di gestione</a>
                     <ul class="right hide-on-med-and-down">
                         <li class="active"><a href="#!"><?php echo $user; ?></a></li>
-                        <li><a href="../index.php">Torna al sito</a></li>
+                        <li><a href="../index.php?p=r">Torna al sito</a></li>
                     </ul>
                 </div>
             </nav>
@@ -331,11 +332,6 @@ while ($row = mysqli_fetch_assoc($response1)) {
                             <textarea id="descrC" type="text" class="materialize-textarea" maxlength="255" length="255"></textarea>
                             <label for="descrC">Descrizione</label>
                         </div>
-                        <!-- eta cat -->
-                        <div class="input-field">
-                            <input id="etaC" type="text" maxlength="255" length="255">
-                            <label for="etaC">Eta</label>
-                        </div>
                         <p>Cambia immagine di default</p>
                         <form name="imgUploadCat" action="#" method="POST">
                             <div class="file-field input-field">
@@ -397,6 +393,17 @@ while ($row = mysqli_fetch_assoc($response1)) {
                     <!-- bottone form -->
                     <div class="col l12 right-align">
                         <br><br>
+                        <div class="preloader-wrapper small active" id="load_cat" style="display: none;">
+                            <div class="spinner-layer spinner-blue-only">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div><div class="gap-patch">
+                                    <div class="circle"></div>
+                                </div><div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                </div>
+                            </div>
+                        </div>
                         <button type="submit" id="submit_btn2" class="red darken-4 btn" value="salva"><i class="material-icons right">save</i>Salva</button>
                     </div>
                 </div>

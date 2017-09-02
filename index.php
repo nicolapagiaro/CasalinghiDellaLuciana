@@ -1,6 +1,8 @@
 <?php
 session_start();
-session_unset();
+if(isset($_GET['p'])) {
+    session_unset();
+}
 
 include('constants.php');
 include('class.php');
@@ -16,7 +18,7 @@ while ($row = mysqli_fetch_assoc($response)) {
 $news = array();
 $query1 = "SELECT id, titolo, descrizione, coloreTesto, immagine"
         . " FROM NEWS "
-        . "WHERE dataI < CURRENT_DATE AND dataF > CURRENT_DATE";
+        . "WHERE dataI <= CURRENT_DATE AND dataF >= CURRENT_DATE";
 $response1 = mysqli_query($db, $query1);
 while ($row = mysqli_fetch_assoc($response1)) {
     $news[] = new News($row['id'], $row['titolo'], $row['descrizione'], $row['coloreTesto'], $row['immagine'], null, null);
@@ -35,6 +37,11 @@ while ($row = mysqli_fetch_assoc($response1)) {
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0"/>
+        <meta name="description" content="Casalinghi Dalla Luciana">
+        <meta name="keywords" content="Casalinghi Dalla Luciana, sito ufficiale, official site, original brand, Luciana, Padova, negozio, giochi, giocattoli, utensili, casa, regali, arcella, negozio storico,
+              giochi per bambino, giochi per bambina, giochi per neonati, giochi da tavolo, giochi di società, borse termiche, tortiere, pentole, padelle 
+              ceramiche, contenitori, plastica, ferro, terra cotta">
+        <meta name="author" content="Nicola Pagiaro">
     </head>
     <body>
         <div class="navabar white">
@@ -65,12 +72,12 @@ while ($row = mysqli_fetch_assoc($response1)) {
             <div class="row container">   
                 <!-- Paragrafo #0 -->
                 <div class="col l12 s12" style="
-                    <?php 
-                    if (count($news) == 0) {
-                        echo 'display: none;';
-                    }
-                    ?>
-                ">
+                <?php
+                if (count($news) == 0) {
+                    echo 'display: none;';
+                }
+                ?>
+                     ">
                     <h4 class="left-align red-text text-darken-4">In primo piano</h4>
                     <div class="slider">
                         <ul class="slides">
@@ -101,9 +108,9 @@ while ($row = mysqli_fetch_assoc($response1)) {
                             <h5>Esperienza</h5>
                         </div>       
                         <div class="col s12 left-align">
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus neque risus. 
-                                Mauris efficitur ex urna, vel ornare ante suscipit sit amet. 
-                                Etiam aliquam justo odio, a mollis ex dapibus non.
+                            <p> La passione tramandata di generazione in generazione e l’esperienza maturata in oltre quarant’anni di attivit&agrave; 
+                                ci permettono di soddisfare ogni genere di richiesta. Accogliamo i nostri clienti con professionalit&agrave;, 
+                                competenza e cortesia.
                             </p>
                         </div>  
                     </div>
@@ -116,7 +123,9 @@ while ($row = mysqli_fetch_assoc($response1)) {
                             <h5>Attenzione al cliente</h5>
                         </div>       
                         <div class="col s12 left-align">
-                            <p>L’ambiente, a conduzione familiare, &egrave; un luogo accogliente dove ognuno pu&ograve; affidarsi ai nostri premurosi e professionali consigli.</p>
+                            <p>Nell’era dei grandi centri commerciali &egrave; sempre pi&ugrave; difficile trovare una realt&agrave; a conduzione familiare. 
+                                Scopri i vantaggi di un ambiente accogliente, dove le tue richieste sono la nostra priorit&agrave;. 
+                                Tra i vari servizi offriamo deposito di merce prenotata, consegne a domicilio, liste nozze, liste compleanno…</p>
                         </div>  
                     </div>
                     <!-- vasto assortimento -->
@@ -129,10 +138,8 @@ while ($row = mysqli_fetch_assoc($response1)) {
                         </div>       
                         <div class="col s12 left-align">
                             <p>
-                                Il vasto assortimento di giocattoli renderà felici bambini 
-                                e bambine di ogni età e anche gli acquirenti pi&ugrave; 
-                                indecisi troveranno un valido supporto e 
-                                aiuto per la scelta del regalo pi&ugrave; appropriato.
+                                Il vasto assortimento di giocattoli e articoli per la casa soddisfa le esigenze di adulti e bambini. 
+                                Con i nostri preziosi consigli sar&agrave; ancora pi&ugrave; facile trovare l’articolo che fa per te.
                             </p>
                         </div>  
                     </div>                    
@@ -142,7 +149,7 @@ while ($row = mysqli_fetch_assoc($response1)) {
                     <h4 class="left-align red-text text-darken-4">I nostri prodotti</h4>
                     <?php
                     foreach ($categorie as $c) {
-                        echo '<a href="prodotti.php"><div class="col l4 m6 s12 catalogo-container">
+                        echo '<a href="prodotti.php" ><div class="col l4 m6 s12 catalogo-container">
                                 <div class="col s12 center-align">
                                 <img class="responsive-img circle" width="180px" src="images/' . $c->getImmagine() . '">
                                 </div> 
@@ -244,7 +251,7 @@ while ($row = mysqli_fetch_assoc($response1)) {
                     <div class="col l6 s12">
                         <h5>Casalinghi Dalla Luciana</h5>
                         <p>Da oltre quarant'anni soddisfiamo i desideri dei più grandi e dei più piccini</p>
-                        <p><a href="#!" id="cp_trigger">Panello di gestione</a></p>
+                        <p><a href="#!" id="cp_trigger" class="hide-on-med-and-down">Panello di gestione</a></p>
                     </div>	
                     <div class="col l6 s12">
                         <form id="cp_form" action="cp/index.php" method="POST">

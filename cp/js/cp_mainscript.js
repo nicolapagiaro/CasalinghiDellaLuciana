@@ -90,7 +90,6 @@ $(document).ready(function () {
 
                 $('#nomeC').val(obj.nome);
                 $('#descrC').val(obj.descrizione);
-                $('#etaC').val(obj.eta);
                 $('#images_holder').html(s);
                 if (obj.immagine === null || obj.immagine.length === 0)
                     $('#img_cat').html("<img width='65%' class='responsive-img' src='../images/no_image.png'>");
@@ -168,18 +167,21 @@ $(document).ready(function () {
     // listener per il bottone di salvataggio delle modifiche di una categoria
     $('#submit_btn2').on('click', function () {
         var nomeC = $('#nomeC').val(),
-                descrC = $('#descrC').val(), etaC = $('#etaC').val();
+                descrC = $('#descrC').val();
+        $('#load_cat, #submit_btn2').toggle('display');
         $.ajax({
             type: "POST",
             url: "salvaCat.php",
-            data: "nome=" + nomeC + "&descr=" + descrC + "&eta=" + etaC,
+            data: "nome=" + nomeC + "&descr=" + descrC,
             success: function (msg) {
+                $('#load_cat, #submit_btn2').toggle('display');
                 if (msg === '0')
                     Materialize.toast("Modifiche salvate", 4000);
                 else
                     Materialize.toast("Errore nel salvataggio delle modifiche", 4000);
             },
             error: function (msg) {
+                $('#load_cat, #submit_btn2').toggle('display');
                 Materialize.toast("Errore nel salvataggio delle modifiche", 4000);
             }
         });
@@ -256,8 +258,8 @@ $(document).ready(function () {
         e.preventDefault();
         $('#load_orari, #submit_btn4').toggle('display');
         var o = $('input[name=orario]:checked').attr('id'),
-            ferie = $('#ferie').is(':checked');
-            
+                ferie = $('#ferie').is(':checked');
+
         orariObj['orario'] = o;
         orariObj['ferie'] = ferie;
 
@@ -375,36 +377,43 @@ function readURL1(input) {
  * @returns {string} il testo del file
  */
 function caricaOrari(file) {
-    $.get(file, function (file) {
-        var obj = JSON.parse(file.toString());
-        orariObj = obj;
-        var orariI = obj['inverno'];
-        var orariE = obj['estate'];
-        var oI = "";
-        var oE = "";
-        for (var i = 0; i < orariI.length; i++) {
-            oI += "<tr>" +
-                    "<td>" + orariI[i].giorno + "</td>" +
-                    "<td>" + orariI[i].mattina + "</td>" +
-                    "<td>" + orariI[i].pomeriggio + "</td>" +
-                    "</tr>";
-            oE += "<tr>" +
-                    "<td>" + orariE[i].giorno + "</td>" +
-                    "<td>" + orariE[i].mattina + "</td>" +
-                    "<td>" + orariE[i].pomeriggio + "</td>" +
-                    "</tr>";
-        }
+    $.ajax({
+        type: "GET",
+        url: file,
+        success: function (msg) {
+            var obj = JSON.parse(msg.toString());
+            orariObj = obj;
+            var orariI = obj['inverno'];
+            var orariE = obj['estate'];
+            var oI = "";
+            var oE = "";
+            for (var i = 0; i < orariI.length; i++) {
+                oI += "<tr>" +
+                        "<td>" + orariI[i].giorno + "</td>" +
+                        "<td>" + orariI[i].mattina + "</td>" +
+                        "<td>" + orariI[i].pomeriggio + "</td>" +
+                        "</tr>";
+                oE += "<tr>" +
+                        "<td>" + orariE[i].giorno + "</td>" +
+                        "<td>" + orariE[i].mattina + "</td>" +
+                        "<td>" + orariE[i].pomeriggio + "</td>" +
+                        "</tr>";
+            }
 
-        // stampo le stringhe nella pagina
-        $('#cp_orari_i').html(oI);
-        $('#cp_orari_e').html(oE);
+            // stampo le stringhe nella pagina
+            $('#cp_orari_i').html(oI);
+            $('#cp_orari_e').html(oE);
 
-        // checko il radio attivo
-        var oAttivo = obj['orario'];
-        $('input[id=' + oAttivo + ']').prop('checked', true);
+            // checko il radio attivo
+            var oAttivo = obj['orario'];
+            $('input[id=' + oAttivo + ']').prop('checked', true);
 
-        // controllo se il negozio è in ferie
-        $('#ferie').prop('checked', obj.ferie);
-    }
-    );
+            // controllo se il negozio è in ferie
+            $('#ferie').prop('checked', obj.ferie);
+        },
+        error: function (msg) {
+            console.log("Error: " + msg);
+        },
+        cache: false
+    });
 }

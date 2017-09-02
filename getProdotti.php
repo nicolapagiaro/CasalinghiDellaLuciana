@@ -1,4 +1,7 @@
 <?php
+
+session_start();
+
 include('constants.php');
 include('class.php');
 
@@ -6,16 +9,30 @@ $result = array();
 $nomeCat = "";
 $descrCat = "";
 $id = $_POST['id'];
+$ordine = $_POST['ordine'];
 
 //connection to the database
 $db = mysqli_connect(HOST, USER, PASSW, DB) or die();
 $marche = array();
-$query = "SELECT id, defaultImg
+// switch per ordinare le marche visualizzate
+if ($ordine == 1) {
+    $query = "SELECT id, nome, defaultImg
+          FROM MARCHE
+	  WHERE categoria = '$id'
+          ORDER BY (nome) ASC";
+} else if ($ordine == 2) {
+    $query = "SELECT id, nome, defaultImg
+          FROM MARCHE
+	  WHERE categoria = '$id'
+          ORDER BY (nome) DESC";
+} else {
+    $query = "SELECT id, nome, defaultImg
           FROM MARCHE
 	  WHERE categoria = '$id'";
+}
 $res = mysqli_query($db, $query);
 while ($row = mysqli_fetch_assoc($res)) {
-    $marche[] = Marca::conIdNomeImmagine($row['id'], null, $row['defaultImg']);
+    $marche[] = Marca::conIdNomeImmagine($row['id'], $row['nome'], $row['defaultImg']);
 }
 
 $query2 = "SELECT nome, descrizione, eta

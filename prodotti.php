@@ -28,6 +28,12 @@ while ($row = mysqli_fetch_assoc($respCat)) {
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0"/>
+        
+        <meta name="description" content="Casalinghi Dalla Luciana">
+        <meta name="keywords" content="Casalinghi Dalla Luciana, sito ufficiale, official site, original brand, Luciana, Padova, negozio, giochi, giocattoli, utensili, casa, regali, arcella, negozio storico,
+              giochi per bambino, giochi per bambina, giochi per neonati, giochi da tavolo, giochi di società, borse termiche, tortiere, pentole, padelle 
+              ceramiche, contenitori, plastica, ferro, terra cotta">
+        <meta name="author" content="Nicola Pagiaro">
     </head>
     <body>
         <div class="red white">
@@ -40,7 +46,7 @@ while ($row = mysqli_fetch_assoc($respCat)) {
                     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                     <ul class="right hide-on-med-and-down">
                         <li><a href="index.php">Home</a></li>
-                        <li class="active"><a href="#!" id="textToChange3">Prodotti</a></li>
+                        <li class="active"><a href="#!">Prodotti</a></li>
                         <li><a href="#">La nostra storia</a></li>
                     </ul>
                     <ul class="side-nav" id="mobile-demo">
@@ -111,10 +117,29 @@ while ($row = mysqli_fetch_assoc($respCat)) {
                     <p class="title-prodotti no-padd-top">Una carrellata di immagini</p>
                     <div class="hide-on-small-only" id="imageContent"></div>
                     <div class="hide-on-med-and-up" id="imageContentCell"></div>
-                    <p class="title-prodotti">Le nostre marche</p>                  
+                    <div class="col l10 m8 s12">
+                        <p class="title-prodotti">Le nostre marche</p>
+                        <p>Cerchi pi&ugrave; informazioni sui nostri prodotti? <a href="index.php#mail_">Inviaci una mail</a> o vienici a trovare in negozio.</p>
+                    </div>        
+                    <div class="col l2 m4 s12 right-align hide-on-small-and-down">
+                        <br>
+                        <!-- Dropdown Trigger -->
+                        <a class='dropdown-button btn btn-flat' href='#!' data-activates='dropdown1'>Ordina per</a>
+                        <!-- Dropdown Structure -->
+                        <ul id='dropdown1' class='dropdown-content'>
+                            <li><a href="#!" onclick="reloadMarche(1)">A - Z</a></li>
+                            <li><a href="#!" onclick="reloadMarche(2)">Z - A</a></li>
+                        </ul>
+                    </div>
+                    <div class="col s12 hide-on-med-and-up">
+                        <p>Ordina per: <a class="order-scritte" href="#!" onclick="reloadMarche(1)">A - Z</a> · <a class="order-scritte" href="#!" onclick="reloadMarche(2)">Z - A</a></p>
+                    </div>
 
                     <!-- Per mostrare i prodotti -->
                     <div id="content" class="col s12"></div>
+                    
+                    <!-- Per mostrare i prodotti senza immagine -->
+                    <div id="content_noimage" class="col s12"></div>
                 </div>
             </div>
         </div>

@@ -1,3 +1,4 @@
+var catAttiva = 1;
 $(document).ready(function () {
     // (prodotti.php) nascondo l'header e il container della ricerca
     $('#ricercaContainer').toggle('display');
@@ -26,6 +27,19 @@ $(document).ready(function () {
         edge: 'left', // Choose the horizontal origin
         closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
     });
+
+    // Dropdown della pagina dei prodotti
+    $('.dropdown-button').dropdown({
+        inDuration: 225,
+        outDuration: 225,
+        constrainWidth: true, // Does not change width of dropdown to that of the activator
+        hover: true, // Activate on hover
+        gutter: 0, // Spacing from edge
+        belowOrigin: true, // Displays dropdown below the button
+        alignment: 'left', // Displays dropdown with edge aligned to the left of button
+        stopPropagation: false // Stops event propagation
+    }
+    );
 
     //Check to see if the window is top if not then display button
     $(window).scroll(function () {
@@ -122,7 +136,12 @@ $(document).ready(function () {
                         else
                             s += "<div class='img' style=\"background-image:url('images/" + obj[i].immagine + "');\"></div>";
 
-                        s += "<p class='grey-text-1 center-align'><i class='material-icons'>keyboard_arrow_right</i> " + obj[i].categoria.nome + "</p>" +
+                        var nome = obj[i].nome.toLowerCase();
+                        key = key.toLowerCase();
+                        nome = nome.replace(key, "<mark>" + key + "</mark>");
+
+                        s += "<p class='center-align' style='text-transform:capitalize;'>" + nome + "</p>" +
+                                "<p class='grey-text-1 center-align'><i class='material-icons'>keyboard_arrow_right</i> " + obj[i].categoria.nome + "</p>" +
                                 "</div>";
                     }
                     if (obj.length === 0) {
@@ -158,35 +177,54 @@ $(document).ready(function () {
 
     if ($('#content').is(':visible')) {
         // Primo avvio della pagina (DA CAMBIARE)
-        loadProdotti(1, "Infanzia");
+        loadProdotti(1, 0);
     }
+
+    $(document).keyup(function (e) {
+        if (e.keyCode === 27 && $('#ricercaContainer').is(":visible")) {
+            $('#ricercaClose').click();   // esc
+        }
+    });
 });
 
 /**
  * Funzione che carica i prodotti da far vedere
- * @param {type} id id della categoria selezionata
+ * @param {type} id
+ * @param {type} ordine
  * @returns {undefined}
  */
-function loadProdotti(id) {
+function loadProdotti(id, ordine) {
+    catAttiva = id;
     $("#content").fadeOut('slow');
     $.ajax({
         type: "POST",
         url: "getProdotti.php",
-        data: "id=" + id,
+        data: "id=" + id + "&ordine=" + ordine,
         success: function (msg) {
             var obj1 = JSON.parse(msg);
             var obj = obj1.lista;
             var cat = obj1.categoria;
+            var noImageProd = new Array();
             var s = ""; // marche
+            var v = ""; // marche senza foto
             var t = ""; // slide delle foto
             var c = ""; // lista delle foto per la visualizzazione da cellulare
 
             // marche
             for (var i = 0; i < obj.length; i++) {
                 if (obj[i].immagine === null || obj[i].immagine.length === 0)
-                    s += "<div class='logo-container img col l3 m4 s6' style=\"background-image:url('images/no_image.png');\"></div>";
+                    noImageProd.push(obj[i]);
                 else
                     s += "<div class='logo-container img col l3 m4 s6' style=\"background-image:url('images/" + obj[i].immagine + "');\"></div>";
+            }
+            if (noImageProd.length > 0) {
+                v = "<p class='title-prodotti'>E altre come: ";
+                for (var i = 0; i < noImageProd.length; i++) {
+                    if (noImageProd.length !== (i + 1))
+                        v += noImageProd[i].nome + ", ";
+                    else
+                        v += noImageProd[i].nome;
+                }
             }
             if (obj.length === 0) {
                 s += "<div class='col s12 center-aligned'>" +
@@ -203,7 +241,7 @@ function loadProdotti(id) {
                 t += "<div class='slider'><ul class='slides'>";
                 for (var i = 0; i < cat.fotos.length; i++) {
                     t += "<li> " +
-                            "<img  src='images/" + cat.fotos[i].immagine + "' />" +
+                            "<img src='images/" + cat.fotos[i].immagine + "' />" +
                             "</li>";
                     c += "<div class='col s12' style='margin-bottom: 8px;'><img class='responsive-img' src='images/" + cat.fotos[i].immagine + "' /></div>";
                 }
@@ -216,6 +254,7 @@ function loadProdotti(id) {
             $('#imageContent').html(t);
             $('#imageContentCell').html(c);
             $('#content').html(s);
+            $('#content_noimage').html(v);
             $("#content").fadeIn('slow');
             $('.slider').slider({height: 550, transition: 650, interval: 10000});
         },
@@ -231,40 +270,47 @@ function loadProdotti(id) {
  * @returns {string} il testo del file
  */
 function readTextFile(file) {
-    $.get(file, function (file) {
-        var obj = JSON.parse(file.toString());
-        var orari = obj[obj.orario];
-        var s = "";
-        var v = "";
-        for (var i = 0; i < orari.length; i++) {
-            s += "<tr>" +
-                    "<td>" + orari[i].giorno + "</td>" +
-                    "<td>" + orari[i].mattina + "</td>" +
-                    "<td>" + orari[i].pomeriggio + "</td>" +
-                    "</tr>";
-            v += "<p>" + orari[i].giorno + ": " + orari[i].mattina +
-                    ", " + orari[i].pomeriggio + "</p>";
-        }
-        if (!obj.ferie) {
-            checkOrarioNegozio(orari);
-
-            var interval = 60000; // 1 minuto
-            setInterval(function () { // controllo sempre se è aperto o chiuso
+    $.ajax({
+        type: "GET",
+        url: file,
+        success: function (msg) {
+            var obj = JSON.parse(msg.toString());
+            var orari = obj[obj.orario];
+            var s = "";
+            var v = "";
+            for (var i = 0; i < orari.length; i++) {
+                s += "<tr>" +
+                        "<td>" + orari[i].giorno + "</td>" +
+                        "<td>" + orari[i].mattina + "</td>" +
+                        "<td>" + orari[i].pomeriggio + "</td>" +
+                        "</tr>";
+                v += "<p>" + orari[i].giorno + ": " + orari[i].mattina +
+                        ", " + orari[i].pomeriggio + "</p>";
+            }
+            if (!obj.ferie) {
                 checkOrarioNegozio(orari);
-            }, interval);
-        } else { //il negozio è chiuso per ferie
-            if (!$('#orarioC').is(':visible'))
-                $('#orarioC').toggle('display');
-            if ($('#orarioA').is(':visible'))
-                $('#orarioA').toggle('display');
-            $('#orarioDiff').text('Il negozio è in ferie');
-        }
 
-        // stampo le stringhe nella pagina
-        $('#tabellaOrari').html(s);
-        $('#divOrari').html(v);
-    }
-    );
+                var interval = 60000; // 1 minuto
+                setInterval(function () { // controllo sempre se è aperto o chiuso
+                    checkOrarioNegozio(orari);
+                }, interval);
+            } else { //il negozio è chiuso per ferie
+                if (!$('#orarioC').is(':visible'))
+                    $('#orarioC').toggle('display');
+                if ($('#orarioA').is(':visible'))
+                    $('#orarioA').toggle('display');
+                $('#orarioDiff').text('Il negozio è in ferie');
+            }
+
+            // stampo le stringhe nella pagina
+            $('#tabellaOrari').html(s);
+            $('#divOrari').html(v);
+        },
+        error: function (msg) {
+            console.log("Error: " + msg);
+        },
+        cache: false
+    });
 }
 
 /**
@@ -411,4 +457,13 @@ function msToTime(duration) {
     if (hours === 0 && minutes === 0)
         s += "poco";
     return s;
+}
+
+/**
+ * Funzione chiamata dal dropdown per ordinare le marche
+ * @param {type} ordine
+ * @returns {undefined}
+ */
+function reloadMarche(ordine) {
+    loadProdotti(catAttiva, ordine);
 }

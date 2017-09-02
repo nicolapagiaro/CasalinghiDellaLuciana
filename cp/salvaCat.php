@@ -4,11 +4,10 @@ include('../constants.php');
 session_start();
 $nome = $_POST['nome'];
 $descr = $_POST['descr'];
-$eta = $_POST['eta'];
 
 //connection to the database
 $db = mysqli_connect(HOST, USER, PASSW, DB) or die();
-$query = "UPDATE CATEGORIE SET nome = '$nome', descrizione = '$descr', eta = '$eta' "
+$query = "UPDATE CATEGORIE SET nome = '$nome', descrizione = '$descr'"
         . "WHERE id = " . $_SESSION['idCat'];
 $res = mysqli_query($db, $query);
 if($res) {
