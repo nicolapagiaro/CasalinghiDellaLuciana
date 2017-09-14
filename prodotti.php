@@ -47,12 +47,12 @@ while ($row = mysqli_fetch_assoc($respCat)) {
                     <ul class="right hide-on-med-and-down">
                         <li><a href="index.php">Home</a></li>
                         <li class="active"><a href="#!">Prodotti</a></li>
-                        <li><a href="#">La nostra storia</a></li>
+                        <li><a href="history.html">La nostra storia</a></li>
                     </ul>
                     <ul class="side-nav" id="mobile-demo">
                         <li><a href="index.php">Home</a></li>
-                        <li><a class="red-text"href="#">Prodotti</a></li>
-                        <li><a href="#">La nostra storia</a></li>
+                        <li class="active"><a href="#">Prodotti</a></li>
+                        <li><a href="history.html">La nostra storia</a></li>
                     </ul>
                 </div>
                 <div class="container nav-content">

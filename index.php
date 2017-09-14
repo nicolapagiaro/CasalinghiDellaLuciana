@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_GET['p'])) {
+if (isset($_GET['p'])) {
     session_unset();
 }
 
@@ -55,12 +55,12 @@ while ($row = mysqli_fetch_assoc($response1)) {
                     <ul class="right hide-on-med-and-down">
                         <li class="active"><a href="#!">Home</a></li>
                         <li><a href="prodotti.php">Prodotti</a></li>
-                        <li><a href="#">La nostra storia</a></li>
+                        <li><a href="history.html">La nostra storia</a></li>
                     </ul>
                     <ul class="side-nav" id="mobile-demo">
-                        <li><a href="#!">Home</a></li>
+                        <li class="active"><a href="#!">Home</a></li>
                         <li><a href="prodotti.php">Prodotti</a></li>
-                        <li><a href="#">La nostra storia</a></li>
+                        <li><a href="history.html">La nostra storia</a></li>
                     </ul>
                 </div>
             </nav>
@@ -102,7 +102,7 @@ while ($row = mysqli_fetch_assoc($response1)) {
                     <!-- storia -->
                     <div class="col l4 m4 s12">
                         <div class="col s12 center-align">
-                            <img class="responsive-img circle" width="180px" src="images/placeholder.png">
+                            <img class="responsive-img circle" width="180px" src="images/ICONA_esperienza.jpg">
                         </div> 
                         <div class="col s12 center-align">
                             <h5>Esperienza</h5>
@@ -117,7 +117,7 @@ while ($row = mysqli_fetch_assoc($response1)) {
                     <!-- accoglienza -->
                     <div class="col l4 m4 s12">
                         <div class="col s12 center-align">
-                            <img class="responsive-img circle" width="180px" src="images/house.jpg">
+                            <img class="responsive-img circle" width="180px" src="images/icona attenzione al cliente.jpg">
                         </div> 
                         <div class="col s12 center-align">
                             <h5>Attenzione al cliente</h5>
@@ -131,7 +131,7 @@ while ($row = mysqli_fetch_assoc($response1)) {
                     <!-- vasto assortimento -->
                     <div class="col l4 m4 s12">
                         <div class="col s12 center-align">
-                            <img class="responsive-img circle" width="180px" src="images/boy&girl.jpg">
+                            <img class="responsive-img circle" width="180px" src="images/icona vasto assortimento.jpg">
                         </div> 
                         <div class="col s12 center-align">
                             <h5>Vasto assortimento</h5>
@@ -179,25 +179,27 @@ while ($row = mysqli_fetch_assoc($response1)) {
                             <p><i class="material-icons">place</i> Padova</p>
                         </div> 
                     </div>
-                    <div class="col l12 m12 s12">
-                        <p class="title-prodotti no-padd">Orari - 
-                            <span class="green-text text-darken-1" id="orarioA">ora aperto</span> 
-                            <span class="red-text text-darken-1" id="orarioC">ora chiuso</span>
-                        </p>
-                        <p id="orarioDiff"></p>
-                    </div>
-                    <div class="col l8 m12 s12">
-                        <div id="divOrari" class="hide-on-med-and-up"></div>
-                        <table class="highlight hide-on-small-and-down">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Mattina</th>
-                                    <th>Pomeriggio</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabellaOrari"></tbody>
-                        </table>
+                    <div class="row">
+                        <div class="col l12 m12 s12">
+                            <p class="title-prodotti no-padd">Orari - 
+                                <span class="green-text text-darken-1" id="orarioA">ora aperto</span> 
+                                <span class="red-text text-darken-1" id="orarioC">ora chiuso</span>
+                            </p>
+                            <p id="orarioDiff"></p>
+                        </div>
+                        <div class="col l8 m12 s12">
+                            <div id="divOrari" class="hide-on-med-and-up"></div>
+                            <table class="highlight hide-on-small-and-down">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Mattina</th>
+                                        <th>Pomeriggio</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabellaOrari"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <!-- Paragrafo #4 -->
