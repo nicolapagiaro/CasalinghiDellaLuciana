@@ -1,4 +1,0 @@
-{"inverno":[{"giorno":"Lunedì","mattina":"9:00 - 12:30","pomeriggio":"15:30 - 19:30"}, {"giorno":"Martedì","mattina":"9:00 - 12:30","pomeriggio":"15:30 - 19:30"},{"giorno":"Mercoledì","mattina":"9:00 - 12:30","pomeriggio":"15:30 - 19:30"},{"giorno":"Giovedì","mattina":"9:00 - 12:30","pomeriggio":"15:30 - 19:30"},{"giorno":"Venerdì","mattina":"9:00 - 12:30","pomeriggio":"15:30 - 19:30"},{"giorno":"Sabato","mattina":"9:00 - 12:30","pomeriggio":"15:30 - 19:30"}],
-"estate":[{"giorno":"Lunedì","mattina":"-","pomeriggio":"16:00 - 19:30"}, {"giorno":"Martedì","mattina":"9:00 - 12:30","pomeriggio":"16:00 - 19:30"},{"giorno":"Mercoledì","mattina":"9:00 - 12:30","pomeriggio":"16:00 - 19:30"},{"giorno":"Giovedì","mattina":"9:00 - 12:30","pomeriggio":"16:00 - 19:30"},{"giorno":"Venerdì","mattina":"9:00 - 12:30","pomeriggio":"16:00 - 19:30"},{"giorno":"Sabato","mattina":"9:00 - 12:30","pomeriggio":"16:00 - 19:30"}],
-"orario":"estate",
-"ferie": false}
